@@ -6,10 +6,10 @@
  */
 
 
-#include <dma.hpp>
-#include <gpio.hpp>
+#include <dma.h>
+#include <gpio.h>
 #include <main.hpp>
-#include <tim.hpp>
+#include <tim.h>
 
 
 #ifndef INC_LED_DRIVER_C_

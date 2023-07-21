@@ -8,21 +8,12 @@
 #ifndef INC_TIME_HANDLER_H_
 #define INC_TIME_HANDLER_H_
 
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
-
 #include <main.hpp>
-#include "stm32l0xx_it.h"
-
-//functions which managing the 1ms time base
-void counter_update_it(void);
-static uint32_t my_counter=0;
+//#include "stm32l0xx_it.h"
 
 /**
  * @brief Timer class used in all cases of timed events where timing is not that critical
  */
-
 class Timer{
 	public:
 		Timer();
@@ -33,5 +24,9 @@ class Timer{
 		uint32_t my_now;
 		uint32_t my_timer;
 };
+
+//functions which managing the 1ms time base
+void counter_update_it(void);
+static uint32_t my_counter=0;
 
 #endif /* INC_TIME_HANDLER_H_ */

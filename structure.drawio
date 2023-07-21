@@ -1,0 +1,156 @@
+<mxfile host="app.diagrams.net" modified="2023-05-30T20:12:59.024Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.57" etag="SI0huaystlUGPje572S2" version="21.3.6" type="device">
+  <diagram name="Seite-1" id="6L9HFDCO-Z73CPM4C7mu">
+    <mxGraphModel dx="933" dy="1312" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dpuZcx_trGLI_SxR2c36-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="dpuZcx_trGLI_SxR2c36-2" target="dpuZcx_trGLI_SxR2c36-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="445" y="400" />
+              <mxPoint x="445" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-2" target="dpuZcx_trGLI_SxR2c36-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="445" y="380" />
+              <mxPoint x="445" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-2" value="&lt;b&gt;output mixer&lt;br&gt;&lt;/b&gt;1ms/20ms&lt;br&gt;settings active/inactive" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-17" value="SPI" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-3" target="dpuZcx_trGLI_SxR2c36-16" edge="1">
+          <mxGeometry y="10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-3" target="HEFFiZdQ3YcWts2JUSH9-18" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="440" />
+              <mxPoint x="640" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-3" value="output handler" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="dpuZcx_trGLI_SxR2c36-4" target="dpuZcx_trGLI_SxR2c36-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-18" value="I2C" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="dpuZcx_trGLI_SxR2c36-10" vertex="1" connectable="0">
+          <mxGeometry x="-0.2267" y="-1" relative="1" as="geometry">
+            <mxPoint x="102" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.196;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" parent="1" source="dpuZcx_trGLI_SxR2c36-4" target="HEFFiZdQ3YcWts2JUSH9-6" edge="1">
+          <mxGeometry x="-0.0017" y="-30" relative="1" as="geometry">
+            <mxPoint y="60" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-4" value="&lt;b&gt;time handler&lt;br&gt;&lt;/b&gt;1 sek" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-14" value="DMA" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-5" target="dpuZcx_trGLI_SxR2c36-11" edge="1">
+          <mxGeometry y="20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-5" value="LED driver" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.022;entryY=0.339;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-6" target="HEFFiZdQ3YcWts2JUSH9-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-6" value="&lt;b&gt;Input handler&lt;br&gt;&lt;/b&gt;1ms" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-7" target="HEFFiZdQ3YcWts2JUSH9-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-25" value="save settings to EEPROM" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="HEFFiZdQ3YcWts2JUSH9-24" vertex="1" connectable="0">
+          <mxGeometry x="0.019" y="-2" relative="1" as="geometry">
+            <mxPoint x="68" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-7" value="&lt;b&gt;Settings state machine&lt;br&gt;&lt;/b&gt;1ms" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="280" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-8" target="dpuZcx_trGLI_SxR2c36-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="dpuZcx_trGLI_SxR2c36-8" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="260" y="220" />
+              <mxPoint x="280" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-8" target="dpuZcx_trGLI_SxR2c36-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="dpuZcx_trGLI_SxR2c36-8" target="dpuZcx_trGLI_SxR2c36-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-8" value="&lt;b&gt;main&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-9" value="RTC: &lt;br&gt;DS3231" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-11" value="WS2812B" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-16" value="Shift Register" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dpuZcx_trGLI_SxR2c36-22" value="&lt;h1&gt;Funktionen - Menüs, Untermenüs, Zustände und mehr&lt;/h1&gt;&lt;p&gt;&lt;b&gt;Global:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Beim starten EEPROM laden, im RAM speichern&lt;/p&gt;&lt;p&gt;wenn Änderung gemacht, in EEPROM speichern&lt;/p&gt;&lt;p&gt;einmal drücken für Menü; dann Settingnummer + Farbe durch drehen wählen, zur eingabe Drücken&lt;/p&gt;&lt;p&gt;nach Eingabe 0,5sek Delay, dann geht Farbe aus/an - Cooldown nach jeder Eingabe&lt;br&gt;&lt;/p&gt;&lt;p&gt;Wenn in Settingmenü: 3 Sek drücken = Speichern und verlassen&lt;/p&gt;&lt;p&gt;Untermenü verlassen: solange drehen, bis &quot;1&quot; an erster Stelle&lt;/p&gt;&lt;p&gt;Ziffern für Menüauswahl an vierter Stelle&lt;/p&gt;&lt;p&gt;Menü wird nach 30 sek Inaktivität verlassen NICHT gespeichert!&lt;/p&gt;&lt;p&gt;An/Ausschaltanimation?&lt;/p&gt;&lt;p&gt;&lt;b&gt;1. Zeiteinstellung:&lt;span style=&quot;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;Settingfarbe grün&lt;br&gt;&lt;/b&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt; drehen = ändern&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;drücken = bestätigen und zurück&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b&gt;2. Datum:&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;Settingfarbe: blau&lt;/b&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;drehen = &lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;Tag/Monat ändern (beides auf einmal - nicht einzeln auswählbar)&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;drücken um zu Jahr zu kommen, dann durch drehen einstellen, mit drücken bestätigen+zurückkehren (auf Limits von RTC prüfen!)&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b&gt;3. On/off Zeiten:&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;Settingfarbe: rot&lt;/b&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;Montag - Sonntag&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;mehrere AUS-Bereiche&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;Darstellung: 0x0y: x=Tag (1=Montag); y=Bereich (1-9)&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Bereich aktiv: rot; Bereiche inaktiv: nicht beleuchtet - Bereich inaktiv, wenn Startzeit = Endzeit&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Tag+Bereich durch drehen + drücken auswählen&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Startzeit: nur linke LED leuchtet; durch drehen Zeit einstellen, mit drücken bestätigen&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;Endzeit: nur rechte LED leuchtet; durch drehen Zeit einstellen, mit Drücken bestätigen + zurückkehren&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;&lt;b&gt;4. Hintergrundfarbe&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;Settingfarbe gelb&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;1 An/Aus - Auswählen, durch drehen ändern, durch drücken bestätigen + zurück&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;2 Helligkeit&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- Auswählen, durch drehen ändern, durch drücken bestätigen + zurück&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;3 - x mehrere vordefinierte Farben - durch drücken auswählen - dann flackert Farbe zweimal&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;strike&gt;x+1 - x+3 drei benutzerdefinierte Farben&lt;/strike&gt;&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;strike&gt;&lt;span style=&quot;&quot;&gt;wenn Farbprofil leer: kurz zum bearbeiten, wenn bereits definiert kurz -&amp;gt; auswählen&lt;/span&gt;;&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;lang (2sek) -&amp;gt; bearbeiten&lt;/span&gt;&lt;/strike&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;strike&gt;jede LED einzeln definierbar - werden nacheinander eingestellt; mit drücken bestätigen; nächste LED startet mit letzter gewählter Farbe; bereits ausgewählte Farben werden am Anfang dargestellt&lt;/strike&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;strike&gt;Farben an Zahlen knüpfen, damit man Orientierung hat. 0-2 für vorher ausgewählte, bis 256 mit regenbogen&lt;/strike&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;strike&gt;nachdem letzte Farbe gewählt ist, flackert LED zweimal, dann zurück ins Menü Hintergrundfarbe&lt;/strike&gt;&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;5. Hintergrund Effekt:&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;Settingfarbe: lila&lt;/b&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;jeweils preview mit aktueller farbe; wenn keine Farbe: default farbe = weiß&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;statisch; atmen; regebogen, hin und her laufen; halt was lustiges überlegen... - Speicherplatz im ROM/Ram beachten, für Updates ;)&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;6. Zwischenpunkte: optional&lt;span style=&quot;white-space: pre;&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;Settingfarbe: türkis&lt;/b&gt;&lt;br&gt;&lt;/p&gt;&lt;blockquote style=&quot;margin: 0 0 0 40px; border: none; padding: 0px;&quot;&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;Dauer an/aus, sekunden, alle gleich, abwechselnd; oben unten&lt;/span&gt;&lt;/p&gt;&lt;/blockquote&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;&lt;b&gt;Extra:&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt; &lt;/span&gt;5 Sek drücken macht Uhr aus/an - wird mit nächstem globalen Zeitbebereich oder An/Aus überschrieben&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="610" width="760" height="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" parent="1" source="HEFFiZdQ3YcWts2JUSH9-6" target="dpuZcx_trGLI_SxR2c36-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="310" />
+              <mxPoint x="180" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HEFFiZdQ3YcWts2JUSH9-6" target="dpuZcx_trGLI_SxR2c36-2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="390" />
+              <mxPoint x="210" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-6" value="&lt;b&gt;RAM&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;- read changed Data&amp;nbsp; from RAM + write to RTC;&lt;br&gt;- write actual time to RAM for temp modification in settings&lt;br&gt;&lt;br&gt;- new input:&lt;br&gt;rotate (+- sections;)&lt;br&gt;press (short, long (2), extra long (3) ;) )&lt;br&gt;nothing&lt;br&gt;- check board size&lt;br&gt;&lt;br&gt;&lt;br&gt;- read current state&lt;br&gt;- write new state to temp clone register --&amp;gt; safe to main register/EEPROM, when finished&lt;br&gt;&lt;br&gt;&lt;br&gt;- read settings and control output accordingly" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="20" y="40" width="160" height="560" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-18" value="HV" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HEFFiZdQ3YcWts2JUSH9-23" target="dpuZcx_trGLI_SxR2c36-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-28" value="load setting on startup" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="HEFFiZdQ3YcWts2JUSH9-27" vertex="1" connectable="0">
+          <mxGeometry x="0.2111" y="1" relative="1" as="geometry">
+            <mxPoint x="13" y="-11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HEFFiZdQ3YcWts2JUSH9-23" value="EEPROM" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="440" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

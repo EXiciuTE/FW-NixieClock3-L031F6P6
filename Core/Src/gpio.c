@@ -19,7 +19,7 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "gpio.hpp"
+#include <gpio.h>
 
 /* USER CODE BEGIN 0 */
 

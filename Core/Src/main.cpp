@@ -17,17 +17,18 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <dma.hpp>
-#include <gpio.hpp>
-#include <i2c.hpp>
+#include <dma.h>
+#include <gpio.h>
+#include <i2c.h>
 #include <input_handler.hpp>
-#include <led_driver.hpp>
 #include <main.hpp>
+#include <led_driver.hpp>
 #include <output_mixer.hpp>
 #include <output_handler.hpp>
 #include <settings_sm.hpp>
-#include <spi.hpp>
-#include <tim.hpp>
+#include <spi.h>
+#include <tim.h>
+#include <time_handler.hpp>
 //#include <time_handler.hpp>
 
 /* Private includes ----------------------------------------------------------*/
@@ -121,9 +122,12 @@ int main(void)
   {
 
 	  /* USER CODE END WHILE */
-	  if(counter==0)
+	  if(counter==0){
 		  new_color++;
-	  	  new_data=true;
+		  new_data=true;
+	  }
+	  else
+		  ;
 	  if(new_color>6)
 		  new_color = 1;
 //	  run_output_handler(); //add timer!
@@ -142,14 +146,6 @@ int main(void)
 		  new_data=false;
 	  }
 
-//	  set_color(0, RED, 25);
-//	  set_color(1, GREEN, 25);
-//	  set_color(2, BLUE, 25);
-//	  set_color(3, YELLOW, 25);
-//	  set_color(4, ROSE, 25);
-//	  set_color(5, AZURE, 25);
-
-//	  send_data(true);
 	  counter++;
 	  if(counter>=500)
 		  counter=0;

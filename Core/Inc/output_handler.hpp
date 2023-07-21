@@ -5,9 +5,9 @@
  *      Author: erikf
  */
 
-#include <gpio.hpp>
+#include <gpio.h>
 #include <main.hpp>
-#include <spi.hpp>
+#include <spi.h>
 
 #ifndef INC_OUTPUT_HANDLER_H_
 #define INC_OUTPUT_HANDLER_H_
