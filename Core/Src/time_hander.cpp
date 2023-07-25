@@ -6,25 +6,26 @@
  *  @brief: class for handling communication with real time clock
  */
 
-#include "time_handler.hpp"
+#include <time_handler.hpp>
 
 #ifndef SRC_TIME_HANDLER_C_
 #define SRC_TIME_HANDLER_C_
 
 /**
- * @brief: funcitons updates counter for 1ms time base
+ * @brief: funcitons updates counter for 1ms time base - triggered by timer hardware module
  */
 void counter_update_it(){
-	my_counter++;
+	sys_counter++;
 }
 
 /**
- * @brief function starts a timer for the given class
- * offset is set to acutal tick
- * @param 32bit value in ms for how long the timer should run
+ * @brief function to calculate end-time of timer event
+ * @param ms: amount of time, the timer should run
+ * @return systemtick value, at which the timer run out
+ * @usage: call function and insert return value into timeout() function, to check if timeout occured
  */
-void Timer::start_timer_ms(uint32_t new_timer_value){
-	my_timer = my_counter + new_timer_value;
+uint32_t start_timer_ms(uint32_t new_timer_value){
+	return new_timer_value += sys_counter;
 }
 
 /**
@@ -32,12 +33,11 @@ void Timer::start_timer_ms(uint32_t new_timer_value){
  * @return if present tick counter is higher then timer value set by start_timer_ms
  * the timer is expired and the function returns true
  */
-bool Timer::timeout(){
-	if(my_counter>my_timer)
-		return true;
-	else
+bool timeout(uint32_t end_time){
+	if(end_time>sys_counter)
 		return false;
+	else
+		return true;
 }
-
 
 #endif /* SRC_TIME_HANDLER_C_ */

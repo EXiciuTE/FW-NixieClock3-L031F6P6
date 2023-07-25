@@ -17,19 +17,18 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include <dma.h>
-#include <gpio.h>
-#include <i2c.h>
-#include <input_handler.hpp>
 #include <main.hpp>
-#include <led_driver.hpp>
-#include <output_mixer.hpp>
-#include <output_handler.hpp>
-#include <settings_sm.hpp>
-#include <spi.h>
-#include <tim.h>
-#include <time_handler.hpp>
-//#include <time_handler.hpp>
+#include "dma.h"
+#include "i2c.h"
+#include "spi.h"
+#include "tim.h"
+#include "gpio.h"
+#include "input_handler.hpp"
+#include "settings_sm.hpp"
+#include "time_handler.hpp"
+#include "output_mixer.hpp"
+#include "output_handler.hpp"
+#include "led_driver.hpp"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -103,57 +102,19 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_OC_Start_IT(&htim21, TIM_CHANNEL_1);
 
-
-
-  uint8_t board_size = 4;
+  board_size = 4;
   if(HAL_GPIO_ReadPin(sens_size_GPIO_Port, sens_size_Pin)==true){
 	  board_size = 6;
   }
-  uint32_t counter = 0;
-  uint8_t new_color=0;
-  bool new_data = false;
-  uint32_t color=0;
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-	  /* USER CODE END WHILE */
-	  if(counter==0){
-		  new_color++;
-		  new_data=true;
-	  }
-	  else
-		  ;
-	  if(new_color>6)
-		  new_color = 1;
-//	  run_output_handler(); //add timer!
-	  if(new_data==true){
-		  switch(new_color){
-			  case 1: color=RED; break;
-			  case 2: color=BLUE; break;
-			  case 3: color=GREEN; break;
-			  case 4: color=YELLOW; break;
-			  case 5: color=ROSE; break;
-			  case 6: color=AZURE; break;
-		  };
-		  for(uint8_t i=0; i<7;i++)
-			  set_color(i,color,25);
-		  send_data(true);
-		  new_data=false;
-	  }
-
-	  counter++;
-	  if(counter>=500)
-		  counter=0;
-
-	  if(new_color>=0xffffff)
-		  new_color=0;
-
-
+    /* USER CODE END WHILE */
+	  set_color(1,0x0,1);
+	  send_data(true);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -197,7 +158,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)	//Problem!
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }
@@ -224,7 +185,6 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
-	  ;
   }
   /* USER CODE END Error_Handler_Debug */
 }

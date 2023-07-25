@@ -28,10 +28,12 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx_hal.h"
+#include "time_handler.hpp"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+static uint8_t board_size = 0;
+void test(void);
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -71,7 +73,6 @@ void Error_Handler(void);
 #define enable_hv_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-static uint8_t board_size=0;
 
 /* USER CODE END Private defines */
 
