@@ -11,6 +11,30 @@
 #ifndef SRC_OUTPUT_HANDLER_C_
 #define SRC_OUTPUT_HANDLER_C_
 
+
+/**
+ * @brief main function of output handler - gets called every ms and manages outgoing signals
+ */
+void run_output_handler(void){
+	//demo for LED control
+	if(timeout(output_handler_timer)==true){
+		  output_handler_timer= start_timer_ms(125);
+		  set_color(active_led,0x0,25);
+		  active_led++;
+		  if(active_led == board_size){
+			  active_led = 0;
+			  switch(color_number){
+			  	  case 0: color=RED; color_number++; break;
+			  	  case 1: color=GREEN; color_number++; break;
+			  	  case 2: color=BLUE; color_number=0; break;
+			  }
+
+		  }
+		  set_color(active_led,color,25);
+		  send_data(true);
+	  }
+}
+
 /*
  * @brief: function to handle write commands via SPI - calls HAL
  */
@@ -24,26 +48,26 @@ void write_spi(void){
 /*
  * @brief: applies set output data to acutal periphery; should be called every ms
  */
-void run_output_handler(void){
-	//waits for output-switch-cooldown to get zero - the most recent command is than applied to the output (if the state changes)
-	if(flyback_change_cooldown==0){
-		if(flyback_state_hardware != flyback_state_software){
-			flyback_state_hardware = flyback_state_software;
-			HAL_GPIO_WritePin(enable_hv_GPIO_Port, enable_hv_Pin, GPIO_PIN_SET);	//change Pin
-			flyback_change_cooldown=250;
-		}
-	}
-
-	//write displayed data to shiftregisters via SPI
-
-	if(spi_refresh==0){
-		write_spi();
-		spi_refresh = 100;
-	}
-	else{
-		spi_refresh--;
-	}
-}
+//void run_output_handler(void){
+//	//waits for output-switch-cooldown to get zero - the most recent command is than applied to the output (if the state changes)
+//	if(flyback_change_cooldown==0){
+//		if(flyback_state_hardware != flyback_state_software){
+//			flyback_state_hardware = flyback_state_software;
+//			HAL_GPIO_WritePin(enable_hv_GPIO_Port, enable_hv_Pin, GPIO_PIN_SET);	//change Pin
+//			flyback_change_cooldown=250;
+//		}
+//	}
+//
+//	//write displayed data to shiftregisters via SPI
+//
+//	if(spi_refresh==0){
+//		write_spi();
+//		spi_refresh = 100;
+//	}
+//	else{
+//		spi_refresh--;
+//	}
+//}
 
 /*
  * @name: set_tube_input(uint32_t)

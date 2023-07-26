@@ -6,11 +6,12 @@
  */
 
 #include <main.hpp>
+#include <gpio.h>
 
 #ifndef INC_INPUT_HANDLER_H_
 #define INC_INPUT_HANDLER_H_
 
-
+void run_input_handler(void);
 
 
 

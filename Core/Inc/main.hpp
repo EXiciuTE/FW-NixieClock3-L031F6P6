@@ -71,9 +71,12 @@ void Error_Handler(void);
 #define enable_hv_Pin GPIO_PIN_1
 #define enable_hv_GPIO_Port GPIOB
 
+#define MAIN_TIMER 1
+
 /* USER CODE BEGIN Private defines */
 //basic global variables
-static uint8_t board_size = 0;
+extern uint8_t board_size;
+static uint32_t main_timer = 0;
 
 //variables for runtime handling
 static uint32_t sys_counter=0;			//counts system time in 1ms increments

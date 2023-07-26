@@ -9,3 +9,6 @@
 #include <input_handler.hpp>
 
 
+void run_input_handler(void){
+	;
+}
