@@ -28,12 +28,11 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32l0xx_hal.h"
-#include "time_handler.hpp"
+#include "stdbool.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-static uint8_t board_size = 0;
-void test(void);
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -73,6 +72,14 @@ void Error_Handler(void);
 #define enable_hv_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+//basic global variables
+static uint8_t board_size = 0;
+
+//variables for runtime handling
+static uint32_t sys_counter=0;			//counts system time in 1ms increments
+uint32_t start_timer_ms(uint32_t);		//calculates the end-time relative to the system time at which the timer runs out
+bool timeout(uint32_t);					//compares system time with parameter - input return value of start_timer_ms() here
+void counter_update_it();				//interrupt triggered function to increase sys_counter
 
 /* USER CODE END Private defines */
 

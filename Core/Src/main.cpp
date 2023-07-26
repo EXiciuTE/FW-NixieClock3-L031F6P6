@@ -107,14 +107,39 @@ int main(void)
 	  board_size = 6;
   }
   /* USER CODE END 2 */
-
+  uint32_t main_timer = 0;
+  uint8_t color_number = 1;
+  uint32_t color=RED;
+  uint8_t active_led=0;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
     /* USER CODE END WHILE */
-	  set_color(1,0x0,1);
-	  send_data(true);
+	  if(timeout(main_timer)==true){
+		  main_timer = start_timer_ms(125);
+		  set_color(active_led,0x0,25);
+		  active_led++;
+		  if(active_led == 6){
+			  active_led = 0;
+			  switch(color_number){
+			  	  case 0: color=RED; color_number++; break;
+			  	  case 1: color=GREEN; color_number++; break;
+			  	  case 2: color=BLUE; color_number=0; break;
+			  }
+
+		  }
+		  set_color(active_led,color,25);
+
+		  send_data(true);
+
+	  }
+
+
+
+
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -171,6 +196,37 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+//variables for runtime functions
+/**
+ * @brief: funcitons updates counter for 1ms time base - triggered by timer hardware module
+ */
+void counter_update_it(){
+	sys_counter++;
+}
+
+/**
+ * @brief function to calculate end-time of timer event
+ * @param ms: amount of time, the timer should run
+ * @return systemtick value, at which the timer run out
+ * @usage: call function and insert return value into timeout() function, to check if timeout occured
+ */
+uint32_t start_timer_ms(uint32_t new_timer_value){
+	return new_timer_value += sys_counter;
+}
+
+/**
+ * @brief checks if the timer set by start_timer_ms for a given class is expired
+ * @return if present tick counter is higher then timer value set by start_timer_ms
+ * the timer is expired and the function returns true
+ */
+bool timeout(uint32_t end_time){
+	if(end_time>sys_counter)
+		return false;
+	else
+		return true;
+}
+
 
 /* USER CODE END 4 */
 
