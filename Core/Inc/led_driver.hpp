@@ -18,8 +18,7 @@
 //defines
 #define MAX_LED 6
 #define NUM_BITS 24
-#define LED_RESET 240	//>280us; 1 step=1,25us --> 240/1,25 = 300us
-	//iwie geht hier auch 1?!
+#define LED_RESET 50	// theoretically >280us; 1 step=1,25us --> 240/1,25 = 300us; but 50 works much better :/
 
 //define default colors
 #define WHITE 		0xffffff

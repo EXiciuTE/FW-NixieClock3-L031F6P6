@@ -31,7 +31,7 @@ static uint8_t color_number = 1;
 static uint32_t color=RED;
 static uint8_t active_led=0;
 
-void run_output_handler(void);			//should get called every ms
+void run_output_handler(uint8_t);			//should get called every ms	//TODO: remove input value
 void set_tube_input(uint32_t);
 uint32_t get_tube_data(void);
 uint16_t set_flyback(bool);

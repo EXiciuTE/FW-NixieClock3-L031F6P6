@@ -15,24 +15,40 @@
 /**
  * @brief main function of output handler - gets called every ms and manages outgoing signals
  */
-void run_output_handler(void){
-	//demo for LED control
-	if(timeout(output_handler_timer)==true){
-		  output_handler_timer= start_timer_ms(125);
-		  set_color(active_led,0x0,25);
-		  active_led++;
-		  if(active_led == board_size){
-			  active_led = 0;
-			  switch(color_number){
-			  	  case 0: color=RED; color_number++; break;
-			  	  case 1: color=GREEN; color_number++; break;
-			  	  case 2: color=BLUE; color_number=0; break;
-			  }
+void run_output_handler(uint8_t input){//TODO: remove input value
+	static uint8_t led_position = 0;
+	if(input==1)
+		led_position++;
+	if(input==2)
+		led_position--;
+	if(led_position==6)
+		led_position=0;
+	if(led_position==255)
+		led_position=5;
 
-		  }
-		  set_color(active_led,color,25);
-		  send_data(true);
-	  }
+	for(uint8_t i=0;i<6;i++){
+		set_color(i,0x0,25);
+	}
+	set_color(led_position,YELLOW,25);
+	send_data(true);
+
+	//demo for LED control
+//	if(timeout(output_handler_timer)==true){
+//		  output_handler_timer= start_timer_ms(125);
+//		  set_color(active_led,0x0,25);
+//		  active_led++;
+//		  if(active_led == board_size){
+//			  active_led = 0;
+//			  switch(color_number){
+//			  	  case 0: color=RED; color_number++; break;
+//			  	  case 1: color=GREEN; color_number++; break;
+//			  	  case 2: color=BLUE; color_number=0; break;
+//			  }
+//
+//		  }
+//		  set_color(active_led,color,25);
+//		  send_data(true);
+//	  }
 }
 
 /*
