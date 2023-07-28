@@ -10,7 +10,7 @@
 #ifndef INC_OUTPUT_MIXER_H_
 #define INC_OUTPUT_MIXER_H_
 
-
+void run_output_mixer(void);
 
 
 

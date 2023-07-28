@@ -14,7 +14,7 @@
 // inputs are sampled every 1ms; they have to hold a state for 3 ms to be registered as input and further processed
 #define DEBOUNCE_TIME	5
 #define LONG_PUSH_TIME	2000
-#define SHORT_PUSH_TIME	100
+#define SHORT_PUSH_TIME	50
 
 #define DECODE_FILTER	0b0011
 #define PUSH_FILTER		0b1100

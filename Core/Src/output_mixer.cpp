@@ -12,3 +12,6 @@
 //time output refresh!
 //call led_off whenever LED should turn off - call led_on or send_data to reactivate LED
 //this way the data is saved
+void run_output_mixer(void){
+	;
+}
