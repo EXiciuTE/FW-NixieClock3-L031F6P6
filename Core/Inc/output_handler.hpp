@@ -6,9 +6,9 @@
  */
 
 //#include <gpio.h>
-#include <main.hpp>
 #include <spi.h>
 #include <led_driver.hpp>
+#include <main.hpp>
 
 #ifndef INC_OUTPUT_HANDLER_H_
 #define INC_OUTPUT_HANDLER_H_

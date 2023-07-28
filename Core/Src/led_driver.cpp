@@ -52,15 +52,15 @@ void send_data(bool state){
 
 	index = 0;
 	for(uint8_t i=0;i<MAX_LED;i++){
-		for(uint8_t j = NUM_BITS-1;j>0; j--){
+		for(uint8_t j = NUM_BITS;j>0; j--){
 			if(state == false){
-				pwm_data[index] = 12;
+				pwm_data[index] = LOW_CLOCKS;
 			}
 			else{
-				if(led_data[i]&(1<<j))
-					pwm_data[index] = 27;	//one period = 40 --> High bit = 70%
+				if(led_data[i]&(1<<(j-1)))
+					pwm_data[index] = HIGH_CLOCKS;	//one period = 40 --> High bit = 70%
 				else
-					pwm_data[index] = 13;	//one period = 40 --> High bit = 30%
+					pwm_data[index] = LOW_CLOCKS;	//one period = 40 --> High bit = 30%
 			}
 			index++;
 		}
@@ -81,18 +81,4 @@ void send_data(bool state){
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
 	HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_3);
 	dma_running=false;
-}
-
-/*
- * @brief: start the DMA transfer
- */
-void dma_start(void){
-
-}
-
-/*
- * stops the DMA transfer
- */
-void dma_stop(void){
-
 }

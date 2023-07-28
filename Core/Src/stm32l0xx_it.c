@@ -19,7 +19,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include <main.hpp>
-#include <stm32l0xx_it.h>
+#include "stm32l0xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
