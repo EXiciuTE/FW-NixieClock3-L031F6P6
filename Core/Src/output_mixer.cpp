@@ -19,7 +19,7 @@ void run_output_mixer(uint8_t input){
 	// get all data
 	// compare if something changed
 	// handle led animation state?
-
+	// make sure that a minimum of tubes or points is active!
 
 
 	// just some demo code!

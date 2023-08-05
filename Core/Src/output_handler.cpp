@@ -12,7 +12,7 @@
 #define SRC_OUTPUT_HANDLER_C_
 
 //////////////// SPI-Subroutine ////////////////
-
+//MSB first
 /*
  * @brief: function to handle write commands via SPI - calls HAL
  */
@@ -23,26 +23,37 @@ void spi_write(void){
 }
 
 //////////////// Tube control ////////////////
+// Multiplexer arrangement: data -> hh -> 	mm -> 	point (lh, ll, rh, rl) -> 	ss
+//								 a-d e-h	a-d e-h			a,  b,  c,  d		a-d e-h
+// MSB first
+// lower 4 bit per byte represent the left tube
 
 /*
- * @name: set_tube_input(uint32_t)
- * @brief: function to write new tube data to output stage; does not output data
- * @param: hex values represent the figure to be displayed on the tube
- * 0xyy000000 = houres (tube 1,2)
- * 0x00yy0000 = minutes (tube 3,4)
- * 0x0000y000 = pints (point 1,2,3,4) - (A - left high, B - left low, C - right high, D - right low)
+ * @brief: function to write new tube data to output stage, tube data and point data - does performe output update
+ * @param tube_data hex values represent the figure to be displayed on the tube
+ * 0x00yy0000 = houres (tube 1,2)
+ * 0x0000yy00 = minutes (tube 3,4)
  * 0x000000yy = seconds (tube 5,6)
+ * @param point_data b0 - b4 symbolizes the state of the points
+ * b0 - left high, b1 - left low, b3 - right high, b4 - right low
  */
 
-void set_tube_input(uint32_t data){
+void set_tube_data(uint32_t tube_data, uint8_t point_data){
 	//check for correct input data
 	if(board_size == 4){
-		data&=0xffffC000;
+		tube_data&=0xffff00;
+		point_data&=0x03;
 	}
-	spi_data[0] = (uint8_t)(data >> 24);
-	spi_data[1] = (uint8_t)(data >> 16);
-	spi_data[2] = (uint8_t)(data >> 8);
-	spi_data[3] = (uint8_t)(data);
+	else
+		point_data &= 0x0f;	//mask unused bits
+
+	// lower 4 bit per byte represent the left tube
+	spi_data[0] = (uint8_t)tube_data;			//seconds
+	spi_data[1] = point_data;
+	spi_data[2] = (uint8_t)(tube_data >> 8);	//minutes
+	spi_data[3] = (uint8_t)(tube_data >> 16);	//houres
+
+	spi_write();
 }
 
 
@@ -50,7 +61,7 @@ void set_tube_input(uint32_t data){
  * @brief: function to read tube data from output handler
  */
 uint32_t get_tube_data(void){
-	return tube_data_input;
+	return tube_data;
 }
 
 //////////////// Flyback Converter ////////////////

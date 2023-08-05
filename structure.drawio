@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-05T15:17:45.411Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188" etag="8tlp1jhlclwIrseDMx5L" version="21.6.5" type="device">
+<mxfile host="app.diagrams.net" modified="2023-08-05T17:56:26.071Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188" etag="LNavzUZ8KlvlUnE_rp7v" version="21.6.5" type="device">
   <diagram name="Seite-1" id="6L9HFDCO-Z73CPM4C7mu">
     <mxGraphModel dx="694" dy="421" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -12,7 +12,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GGv3wluL2XYjww3TU3gE-2" value="set_tube_data(uint32_t)&lt;br&gt;set_flyback_state(bool)&lt;br&gt;uint32_t get_tube_data&lt;br&gt;bool get_flyback_state" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dpuZcx_trGLI_SxR2c36-15">
+        <mxCell id="GGv3wluL2XYjww3TU3gE-2" value="set_tube_data(uint32_t, uint8_t)&lt;br&gt;set_flyback_state(bool)&lt;br&gt;uint32_t get_tube_data&lt;br&gt;bool get_flyback_state" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dpuZcx_trGLI_SxR2c36-15">
           <mxGeometry x="0.4229" relative="1" as="geometry">
             <mxPoint x="2" y="40" as="offset" />
           </mxGeometry>

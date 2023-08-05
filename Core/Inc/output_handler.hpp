@@ -20,7 +20,7 @@ static bool flyback_state = false;
 static uint32_t flyback_timer=0;
 
 static uint8_t spi_data[4] = {0};
-static uint32_t tube_data_input=0xff0000ff;
+static uint32_t tube_data=0xff0000ff;
 
 
 ////variables for LED-control
@@ -31,7 +31,7 @@ static uint32_t tube_data_input=0xff0000ff;
 
 //functions
 
-void set_tube_data(uint32_t);
+void set_tube_data(uint32_t, uint8_t);
 uint32_t get_tube_data(void);
 bool set_flyback_state(bool);
 void spi_write(void);
