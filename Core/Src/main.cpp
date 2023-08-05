@@ -27,8 +27,8 @@
 #include "settings_sm.hpp"
 #include "time_handler.hpp"
 #include "output_mixer.hpp"
-#include "output_handler.hpp"
-#include "led_driver.hpp"
+//#include "output_handler.hpp"
+//#include "led_driver.hpp"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -117,7 +117,7 @@ int main(void)
 	  if(timeout(main_timer)){
 		  main_timer = start_timer_ms(MAIN_TIMER);
 
-		  run_output_handler(run_input_handler());
+		  run_output_mixer(run_input_handler());
 
 		  //run all other handlers
 	  }

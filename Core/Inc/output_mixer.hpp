@@ -6,12 +6,21 @@
  */
 
 #include <main.hpp>
+#include <led_driver.hpp>
+#include <output_handler.hpp>
 
 #ifndef INC_OUTPUT_MIXER_H_
 #define INC_OUTPUT_MIXER_H_
 
-void run_output_mixer(void);
+#define LED_REFRESH_RATE	60	//Hz
+#define TUBE_REFRESH_RATE	60	//Hz
 
+#define LED_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
+#define TUBE_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
+
+void run_output_mixer(uint8_t);	//processes data and call output
+static uint32_t output_mixer_led_timer = 0;
+static uint32_t output_mixer_tube_timer = 0;
 
 
 #endif /* INC_OUTPUT_MIXER_H_ */
