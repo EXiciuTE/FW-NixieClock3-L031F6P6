@@ -30,7 +30,7 @@ void spi_write(void){
 
 /*
  * @brief: function to write new tube data to output stage, tube data and point data - does performe output update
- * @param tube_data hex values represent the figure to be displayed on the tube
+ * @param tube_data hex values represent the figure to be displayed on the tube; values above 9 mean OFF
  * 0x00yy0000 = houres (tube 1,2)
  * 0x0000yy00 = minutes (tube 3,4)
  * 0x000000yy = seconds (tube 5,6)
@@ -47,12 +47,18 @@ void set_tube_data(uint32_t tube_data, uint8_t point_data){
 	else
 		point_data &= 0x0f;	//mask unused bits
 
-	// lower 4 bit per byte represent the left tube
-	spi_data[0] = (uint8_t)tube_data;			//seconds
-	spi_data[1] = point_data;
-	spi_data[2] = (uint8_t)(tube_data >> 8);	//minutes
-	spi_data[3] = (uint8_t)(tube_data >> 16);	//houres
 
+	// annoying bit shiftery... 123456 --> 214365
+	// lower 4 bit per byte represent the left tube ;(
+	uint8_t low_end = 0;
+	low_end = (tube_data & 0xff) >> 0;
+	spi_data[0] = low_end << 4 | low_end >> 4;
+	low_end = (tube_data & 0xff00) >> 8;
+	spi_data[2] = low_end << 4 | low_end >> 4;
+	low_end = (tube_data & 0xff0000) >> 16;
+	spi_data[3] = low_end << 4 | low_end >> 4;
+
+	spi_data[1] = point_data;
 	spi_write();
 }
 
@@ -74,7 +80,7 @@ uint32_t get_tube_data(void){
  * @info if a new param is written, a cooldown of 500ms is applied, before the converter can get a new state
  * the written value is discarded if the cooldown is still acitve. If the return value
  */
-bool set_flyback(bool new_state){
+bool set_flyback_state(bool new_state){
 	if(flyback_state!=new_state){
 		if(timeout(flyback_timer)){
 			flyback_state = new_state;

@@ -37,7 +37,7 @@
 #define MAGENTA 	0xff00ff
 #define ROSE 		0xff007f
 
-typedef enum {white, red, orange, yellow, chartreuse, green, turquoise, cyan, azure, blue, violet, magenta, rose} Colors;
+//typedef enum {white, red, orange, yellow, chartreuse, green, turquoise, cyan, azure, blue, violet, magenta, rose} Colors;
 
 void set_color(uint8_t, uint32_t, uint8_t);
 void send_data(bool);

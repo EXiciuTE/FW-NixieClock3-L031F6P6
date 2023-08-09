@@ -22,6 +22,9 @@ static uint32_t flyback_timer=0;
 static uint8_t spi_data[4] = {0};
 static uint32_t tube_data=0xff0000ff;
 
+//debug
+
+
 
 ////variables for LED-control
 //static uint32_t output_handler_timer = 0;
