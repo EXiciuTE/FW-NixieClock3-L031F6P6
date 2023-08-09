@@ -49,6 +49,23 @@ void run_output_mixer(uint8_t input){
 
 	// switch HV-enable pin by push of button - change led to indicate state (RED = ON, GREEN = OFF)
 	static bool tmp = false;
+	static uint8_t tube_data = 0;
+	if(input==0x1){
+		tube_data++;
+	}
+	if(input==0x2){
+		tube_data--;
+	}
+	if(tube_data==255)
+		tube_data = 9;
+	if(tube_data==10)
+		tube_data = 0;
+
+	if(timeout(output_mixer_tube_timer)){
+		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
+		set_tube_data((uint32_t (tube_data<<20)), 0);
+	}
+
 	if(input==0x4){
 		flyback_state = !flyback_state;
 		tmp = set_flyback_state(flyback_state);
@@ -70,10 +87,7 @@ void run_output_mixer(uint8_t input){
 	}
 
 
-	if(timeout(output_mixer_tube_timer)){
-		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
-		set_tube_data(0x123456, 0);
-	}
+
 }
 
 
