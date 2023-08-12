@@ -8,8 +8,8 @@
 #ifndef INC_TIME_HANDLER_HPP_
 #define INC_TIME_HANDLER_HPP_
 
-#include <main.hpp>
 #include <i2c.h>
+#include <main.hpp>
 
 // DS3231 I2C ADDRESSES
 #define DS3121_SLAVE_ADDRESS 0xD0

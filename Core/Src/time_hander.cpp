@@ -19,8 +19,9 @@ void write_i2c(uint8_t cmd, uint8_t value){
 uint8_t read_i2c(uint8_t cmd){
 	uint8_t data_t[10];
 	data_t[0] = cmd;
+	HAL_I2C_Master_Transmit(&hi2c1, DS3121_MASTER_ADDRESS, (uint8_t *)data_t, 1, 100);
 	HAL_I2C_Master_Receive(&hi2c1, DS3121_SLAVE_ADDRESS, (uint8_t *)data_t, 10, 100);
-	return data_t[1];
+	return data_t[0];
 }
 
 #endif /* SRC_TIME_HANDLER_C_ */

@@ -16,11 +16,13 @@
  * gets data directly from respective .hpp files
  */
 void run_output_mixer(uint8_t input){
+	static uint8_t sec_t=0;
+
+
 	// get all data
 	// compare if something changed
 	// handle led animation state?
 	// make sure that a minimum of tubes or points is active!
-
 
 	// just some demo code! - move led from left to right - change color on press
 	static uint8_t led_position = 1;
@@ -63,6 +65,11 @@ void run_output_mixer(uint8_t input){
 			tube_data -= 111111;
 	}
 
+	if(timeout(time_handler_timer)){
+		time_handler_timer = start_timer_ms(1000);
+		sec_t = read_i2c(0x00);
+	}
+
 	if(timeout(output_mixer_tube_timer)){
 		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
 		set_number(0, (tube_data/100000) %10);
@@ -75,6 +82,10 @@ void run_output_mixer(uint8_t input){
 		set_point(1, tube_data &0xf);
 		set_point(2, tube_data &0xf);
 		set_point(3, tube_data &0xf);
+
+		set_number(4, sec_t >> 4);
+		set_number(5, sec_t & 0x0f);
+
 		set_output();
 	}
 

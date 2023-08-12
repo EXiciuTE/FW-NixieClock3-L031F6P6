@@ -5,8 +5,8 @@
  *      Author: erikf
  */
 
-#include <spi.h>
 #include <main.hpp>
+#include <spi.h>
 
 #ifndef INC_OUTPUT_HANDLER_H_
 #define INC_OUTPUT_HANDLER_H_

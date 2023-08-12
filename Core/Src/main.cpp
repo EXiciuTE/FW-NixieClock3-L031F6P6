@@ -124,10 +124,6 @@ int main(void)
 		  counter ++;
 		  //run all other handlers
 	  }
-	  if(counter == 2000){
-		  counter = 0;
-		  temp = read_i2c(ADDR_SECONDS);
-	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
