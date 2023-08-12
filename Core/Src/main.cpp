@@ -107,8 +107,8 @@ int main(void)
 	  board_size = 6;
   }
 
-//  uint8_t temp = read_i2c(ADDR_SECONDS);
-
+  uint8_t temp = read_i2c(ADDR_SECONDS);
+  uint16_t counter = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,8 +121,12 @@ int main(void)
 		  main_timer = start_timer_ms(MAIN_TIMER);
 
 		  run_output_mixer(run_input_handler());
-
+		  counter ++;
 		  //run all other handlers
+	  }
+	  if(counter == 2000){
+		  counter = 0;
+		  temp = read_i2c(ADDR_SECONDS);
 	  }
     /* USER CODE BEGIN 3 */
   }
