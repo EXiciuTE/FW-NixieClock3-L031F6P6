@@ -106,6 +106,9 @@ int main(void)
   if(HAL_GPIO_ReadPin(sens_size_GPIO_Port, sens_size_Pin)==true){
 	  board_size = 6;
   }
+
+//  uint8_t temp = read_i2c(ADDR_SECONDS);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

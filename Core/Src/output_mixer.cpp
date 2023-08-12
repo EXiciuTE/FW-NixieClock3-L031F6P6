@@ -24,7 +24,7 @@ void run_output_mixer(uint8_t input){
 
 	// just some demo code! - move led from left to right - change color on press
 	static uint8_t led_position = 1;
-	static uint16_t color = YELLOW;
+	static uint16_t color;
 	static uint8_t state=0;
 	if(input==1)
 		led_position++;
@@ -62,10 +62,6 @@ void run_output_mixer(uint8_t input){
 		else
 			tube_data -= 111111;
 	}
-//	if(tube_data >= 1000000 )
-//		tube_data = 999999;
-//	if(tube_data == 1111110)
-//		tube_data = 0;
 
 	if(timeout(output_mixer_tube_timer)){
 		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
