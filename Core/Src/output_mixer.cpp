@@ -24,7 +24,7 @@ void run_output_mixer(uint8_t input){
 
 	// just some demo code! - move led from left to right - change color on press
 	static uint8_t led_position = 1;
-	static uint16_t color;
+	static uint16_t color = YELLOW;
 	static uint8_t state=0;
 	if(input==1)
 		led_position++;
@@ -49,21 +49,37 @@ void run_output_mixer(uint8_t input){
 
 	// switch HV-enable pin by push of button - change led to indicate state (RED = ON, GREEN = OFF)
 	static bool tmp = false;
-	static uint8_t tube_data = 0;
+	static uint32_t tube_data = 0;
 	if(input==0x1){
-		tube_data++;
+		if(tube_data == 999999)
+			tube_data = 0;
+		else
+			tube_data += 111111;
 	}
 	if(input==0x2){
-		tube_data--;
+		if(tube_data == 0)
+			tube_data = 999999;
+		else
+			tube_data -= 111111;
 	}
-	if(tube_data==255)
-		tube_data = 9;
-	if(tube_data==10)
-		tube_data = 0;
+//	if(tube_data >= 1000000 )
+//		tube_data = 999999;
+//	if(tube_data == 1111110)
+//		tube_data = 0;
 
 	if(timeout(output_mixer_tube_timer)){
 		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
-		set_tube_data((uint32_t (tube_data<<20)), 0);
+		set_number(0, (tube_data/100000) %10);
+		set_number(1, (tube_data/10000) %10);
+		set_number(2, (tube_data/1000) %10);
+		set_number(3, (tube_data/100) %10);
+		set_number(4, (tube_data/10) %10);
+		set_number(5, (tube_data) %10);
+		set_point(0, tube_data &0xf);
+		set_point(1, tube_data &0xf);
+		set_point(2, tube_data &0xf);
+		set_point(3, tube_data &0xf);
+		set_output();
 	}
 
 	if(input==0x4){
