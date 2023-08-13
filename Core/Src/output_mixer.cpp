@@ -65,10 +65,10 @@ void run_output_mixer(uint8_t input){
 			tube_data -= 111111;
 	}
 
-	if(timeout(time_handler_timer)){
-		time_handler_timer = start_timer_ms(1000);
-		sec_t = read_i2c(0x00);
-	}
+//	if(timeout(time_handler_timer)){
+//		time_handler_timer = start_timer_ms(1000);
+//		sec_t = read_i2c_single(0x00);
+//	}
 
 	if(timeout(output_mixer_tube_timer)){
 		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);

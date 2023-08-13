@@ -27,8 +27,6 @@
 #include "settings_sm.hpp"
 #include "time_handler.hpp"
 #include "output_mixer.hpp"
-//#include "output_handler.hpp"
-//#include "led_driver.hpp"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -100,13 +98,15 @@ int main(void)
   MX_TIM21_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+
+  // start hardware timer for 1ms timer
   HAL_TIM_OC_Start_IT(&htim21, TIM_CHANNEL_1);
 
+  // check the size of the board
   board_size = 4;
   if(HAL_GPIO_ReadPin(sens_size_GPIO_Port, sens_size_Pin)==true){
 	  board_size = 6;
   }
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -117,6 +117,7 @@ int main(void)
     /* USER CODE END WHILE */
 	  if(timeout(main_timer)){
 		  main_timer = start_timer_ms(MAIN_TIMER);
+//		  run_time_handler();
 
 		  run_output_mixer(run_input_handler());
 		  //run all other handlers

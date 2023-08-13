@@ -44,7 +44,7 @@ void set_number(uint8_t tube_number, uint8_t value){
 	if(tube_number%2 == 1)
 		value = value << 4;
 
-	//spi_data [0] = seconds; [2] = minutes; [3] = houres
+	//spi_data [0] = seconds; [2] = minutes; [3] = hours
 
 	switch(tube_number){
 		case 0: temp = spi_data[3]; spi_data[3] = (temp & 0xf0) | value; break;

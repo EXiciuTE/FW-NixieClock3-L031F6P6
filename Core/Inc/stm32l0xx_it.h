@@ -27,7 +27,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <time_handler.hpp>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
