@@ -117,7 +117,7 @@ int main(void)
     /* USER CODE END WHILE */
 	  if(timeout(main_timer)){
 		  main_timer = start_timer_ms(MAIN_TIMER);
-//		  run_time_handler();
+		  run_time_handler();
 
 		  run_output_mixer(run_input_handler());
 		  //run all other handlers

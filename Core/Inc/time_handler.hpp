@@ -12,8 +12,8 @@
 #include <main.hpp>
 
 // DS3231 I2C ADDRESSES
-#define DS3121_SLAVE_ADDRESS 0xD0
-#define DS3121_MASTER_ADDRESS 0xD1
+#define DS3231_SLAVE_ADDRESS 0xD0
+#define DS3231_MASTER_ADDRESS 0xD1
 
 #define ADDR_SECONDS	0x00
 #define ADDR_MINUTES	0x01
@@ -37,37 +37,39 @@
 
 #define TIME_UPDATE_MS	500
 
-uint32_t time_handler_timer = 0;
+static uint32_t time_handler_timer = 0;
+static bool new_data = false;
+
+//Data-transfer to/from RTC
+void write_i2c_single(uint8_t, uint8_t);	//address/data
+uint8_t read_i2c_single(uint8_t);			///address
+
+struct time_struct {
+	uint8_t seconds = 0;
+	uint8_t minutes = 0;
+	uint8_t hours = 0;
+	uint8_t day = 0;
+	uint8_t date = 0;
+	uint8_t month = 0;
+	uint16_t year = 0;
+	bool century = 1;
+	bool summer_time = 0;
+};
+
+extern time_struct data_from_RTC;	//data read from RTC gets here
+extern time_struct data_to_RTC;	//data that have to be written on the RTC goes here
+
+void write_time_i2c(void);
+void read_time_i2c(void);	//read on startup to get time info in RAM
+void write_date_i2c(void);
+void read_date_i2c(void);	//read on startup to get date info in RAM
+
+void get_time();
+void set_time();
+void get_date();
+void set_date();
 
 // update time and date from RTC
 void run_time_handler(void);
-//
-////Data-transfer to/from RTC
-//void write_i2c_single(uint8_t, uint8_t);	//address/data
-//uint8_t read_i2c_single(uint8_t);			///address
-//
-//void write_time(void);
-//void write_date(void);
-//void read_time(void);	//read on startup to get time info in RAM
-//void read_date(void);	//read on startup to get date info in RAM
-//
-
-//
-//struct time_struct {
-//	uint8_t seconds;
-//	uint8_t minutes;
-//	uint8_t hours;
-//	uint8_t day;
-//	uint8_t date;
-//	uint8_t month;
-//	uint8_t year;
-//	bool century;
-//	bool summer_time;
-//};
-//
-//
-//
-
-
 
 #endif /* INC_TIME_HANDLER_HPP_ */

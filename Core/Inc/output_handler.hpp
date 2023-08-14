@@ -5,11 +5,11 @@
  *      Author: erikf
  */
 
-#include <main.hpp>
-#include <spi.h>
-
 #ifndef INC_OUTPUT_HANDLER_H_
 #define INC_OUTPUT_HANDLER_H_
+
+#include <main.hpp>
+#include <spi.h>
 
 #define FLYBACK_COOLDOWN 500	//ms
 
