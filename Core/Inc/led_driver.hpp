@@ -36,6 +36,7 @@
 #define VIOLET 		0xee82ee
 #define MAGENTA 	0xff00ff
 #define ROSE 		0xff007f
+#define OFF			0x000000
 
 //typedef enum {white, red, orange, yellow, chartreuse, green, turquoise, cyan, azure, blue, violet, magenta, rose} Colors;
 

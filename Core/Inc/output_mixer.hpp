@@ -22,6 +22,21 @@
 void run_output_mixer(uint8_t);	//processes data and call output
 static uint32_t output_mixer_led_timer = 0;
 static uint32_t output_mixer_tube_timer = 0;
+static uint32_t blink_1_timer = 0;
+static uint32_t blink_2_timer = 0;
 
+// menu variables
+static uint8_t current_menu = 0;
+static uint8_t new_menu = 0;
+static uint8_t current_state = 0;
+static uint8_t old_state = 0;
+
+// misc variables
+static uint32_t active_color=GREEN;
+
+//debug
+static uint8_t brightness = 0;
+static uint8_t number_value = 0;
+static bool blink_state_1 = false;
 
 #endif /* INC_OUTPUT_MIXER_H_ */

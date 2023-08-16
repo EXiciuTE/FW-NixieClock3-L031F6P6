@@ -60,10 +60,6 @@ void set_time(uint8_t value1, uint8_t value2, uint8_t value3){
 		data_to_RTC.hours = data_from_RTC.hours;
 }
 
-void get_date(void){
-	;
-}
-
 void set_date(void){
 	new_data = true;
 }
@@ -80,8 +76,8 @@ void read_time_i2c(void){
 	HAL_I2C_Master_Receive(&hi2c1, DS3231_SLAVE_ADDRESS, (uint8_t *)temp, 3, 10);
 
 	data_from_RTC.seconds = ((temp[0]&0xf0)>>4)*10 + (temp[0]&0x0f);	//converstion from hex to dec
-	data_from_RTC.minutes = ((temp[1]&0xf0)>>4)*10 + (temp[1]%0x0f);
-	data_from_RTC.hours = ((temp[2]&0x30)>>4)*10 + (temp[2]%0x0f);
+	data_from_RTC.minutes = ((temp[1]&0xf0)>>4)*10 + (temp[1]&0x0f);
+	data_from_RTC.hours = ((temp[2]&0x30)>>4)*10 + (temp[2]&0x0f);
 }
 
 /**
@@ -110,8 +106,8 @@ void read_date_i2c(void){
 	HAL_I2C_Master_Receive(&hi2c1, DS3231_SLAVE_ADDRESS, (uint8_t *)temp, 4, 10);
 
 	data_from_RTC.day = temp[0];
-	data_from_RTC.date = ((temp[1]&0x30)>>4)*10 + (temp[1]%0x0f);
-	data_from_RTC.month = ((temp[2]&0x10)>>4)*10 + (temp[2]%0x0f);
+	data_from_RTC.date = ((temp[1]&0x30)>>4)*10 + (temp[1]&0x0f);
+	data_from_RTC.month = ((temp[2]&0x10)>>4)*10 + (temp[2]&0x0f);
 	data_from_RTC.century = (temp[2] & 0x80) >> 7;	//if century == 1 --> year is bigger that 2000
 	data_from_RTC.year = 1900 + (data_from_RTC.century * 100) + ((temp[3]&0xf0)>>4)*10 + (temp[3]%0x0f);
 }
