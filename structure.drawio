@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-05T18:39:05.475Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188" etag="WdKHMXMN4jAn7P050O8G" version="21.6.5" type="device">
+<mxfile host="app.diagrams.net" modified="2023-08-21T18:40:25.493Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.203" etag="T30cIs3WdX-BJ3RkUw9h" version="21.6.6" type="device">
   <diagram name="Seite-1" id="6L9HFDCO-Z73CPM4C7mu">
-    <mxGraphModel dx="694" dy="421" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2074" dy="1124" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -12,7 +12,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GGv3wluL2XYjww3TU3gE-2" value="set_tube_data(uint32_t, uint8_t)&lt;br&gt;set_flyback_state(bool)&lt;br&gt;uint32_t get_tube_data&lt;br&gt;bool get_flyback_state" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="dpuZcx_trGLI_SxR2c36-15">
+        <mxCell id="GGv3wluL2XYjww3TU3gE-2" value="set_tube_data(uint32_t, uint8_t)&lt;br&gt;set_flyback_state(bool)&lt;br&gt;uint32_t get_tube_data&lt;br&gt;bool get_flyback_state" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="dpuZcx_trGLI_SxR2c36-15" vertex="1" connectable="0">
           <mxGeometry x="0.4229" relative="1" as="geometry">
             <mxPoint x="2" y="40" as="offset" />
           </mxGeometry>
@@ -25,7 +25,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GGv3wluL2XYjww3TU3gE-1" value="set_color (uint8_t uint32_t uint8_t)&lt;br&gt;send_data(true/false)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="HEFFiZdQ3YcWts2JUSH9-19">
+        <mxCell id="GGv3wluL2XYjww3TU3gE-1" value="set_color (uint8_t uint32_t uint8_t)&lt;br&gt;send_data(true/false)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="HEFFiZdQ3YcWts2JUSH9-19" vertex="1" connectable="0">
           <mxGeometry x="0.0141" y="-1" relative="1" as="geometry">
             <mxPoint x="39" y="-48" as="offset" />
           </mxGeometry>
@@ -160,10 +160,10 @@
         <mxCell id="HEFFiZdQ3YcWts2JUSH9-23" value="EEPROM" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="440" y="40" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="GGv3wluL2XYjww3TU3gE-4" value="LED-driver and output handler do not save/manage data which can be polled&lt;br&gt;Outputs are refreshed when funtions are called" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="GGv3wluL2XYjww3TU3gE-4" value="LED-driver and output handler do not save/manage data which can be polled&lt;br&gt;Outputs are refreshed when funtions are called" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="670" y="270" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="GGv3wluL2XYjww3TU3gE-5" value="output_mixer_run() - process data; call output&lt;br&gt;&lt;br&gt;gets all needed data from input and setting" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="GGv3wluL2XYjww3TU3gE-5" value="output_mixer_run() - process data; call output&lt;br&gt;&lt;br&gt;gets all needed data from input and setting" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="280" y="420" width="200" height="140" as="geometry" />
         </mxCell>
       </root>

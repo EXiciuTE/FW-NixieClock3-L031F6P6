@@ -64,10 +64,10 @@ void set_number(uint8_t tube_number, uint8_t value){
  */
 void set_point(uint8_t point_number, bool state){
 	switch(point_number){
-		case 0: if(state == true) spi_data[1] |= 0x1; else spi_data[1] &= !0x1; break;
-		case 1: if(state == true) spi_data[1] |= 0x2; else spi_data[1] &= !0x2; break;
-		case 2: if(state == true) spi_data[1] |= 0x4; else spi_data[1] &= !0x4; break;
-		case 3: if(state == true) spi_data[1] |= 0x8; else spi_data[1] &= !0x8; break;
+		case 0: if(state == true) spi_data[1] |= 0x1; else spi_data[1] &= ~0x1; break;
+		case 1: if(state == true) spi_data[1] |= 0x2; else spi_data[1] &= ~0x2; break;
+		case 2: if(state == true) spi_data[1] |= 0x4; else spi_data[1] &= ~0x4; break;
+		case 3: if(state == true) spi_data[1] |= 0x8; else spi_data[1] &= ~0x8; break;
 		default: break;
 	}
 }

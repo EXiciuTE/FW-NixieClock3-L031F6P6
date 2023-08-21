@@ -18,21 +18,19 @@ struct time_struct data_to_RTC;
  * @brief function is constantly called to get fresh time data from rtc - get time every 500ms
  */
 void run_time_handler(void){
+	if(data_to_RTC.new_data==true){
+		data_to_RTC.new_data = false;
+		write_time_i2c();
+		write_date_i2c();
+		data_to_RTC.new_data = false;
+	}
+
 	if(timeout(time_handler_timer)){
 		time_handler_timer = start_timer_ms(TIME_UPDATE_MS);
+
 		read_time_i2c();
 		read_date_i2c();
-
-		if(new_data==true){
-			new_data = false;
-			write_time_i2c();
-			write_date_i2c();
-		}
 	}
-}
-
-void get_time(void){
-	;
 }
 
 /**
@@ -42,7 +40,7 @@ void get_time(void){
  * @param value3: hours in dec  - write 0xff to ignore this value
  */
 void set_time(uint8_t value1, uint8_t value2, uint8_t value3){
-	new_data = true;
+	data_to_RTC.new_data = true;
 
 	if((value1!=0xff) && (value1<=59))
 		data_to_RTC.seconds = value1;
@@ -58,10 +56,6 @@ void set_time(uint8_t value1, uint8_t value2, uint8_t value3){
 		data_to_RTC.hours = value3;
 	else
 		data_to_RTC.hours = data_from_RTC.hours;
-}
-
-void set_date(void){
-	new_data = true;
 }
 
 /**

@@ -35,10 +35,9 @@
 #define ADDR_MSB_TEMP	0x11
 #define ADDR_LSB_TEMP	0x12
 
-#define TIME_UPDATE_MS	500
+#define TIME_UPDATE_MS	100
 
 static uint32_t time_handler_timer = 0;
-static bool new_data = false;
 
 //Data-transfer to/from RTC
 void write_i2c_single(uint8_t, uint8_t);	//address/data
@@ -54,6 +53,7 @@ struct time_struct {
 	uint16_t year = 0;
 	bool century = 1;
 	bool summer_time = 0;
+	bool new_data=0;
 };
 
 extern time_struct data_from_RTC;	//data read from RTC gets here
@@ -65,7 +65,6 @@ void write_date_i2c(void);
 void read_date_i2c(void);	//read on startup to get date info in RAM
 
 void set_time();			// enter time to write to RTC
-void set_date();			// enter date to write to RTC
 
 // update time and date from RTC
 void run_time_handler(void);

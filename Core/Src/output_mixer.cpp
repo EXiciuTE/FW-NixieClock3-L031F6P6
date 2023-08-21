@@ -21,16 +21,6 @@ void run_output_mixer(uint8_t input){
 	// handle led animation state?
 	// make sure that a minimum of tubes or points is active!
 
-	static uint8_t led_position = 1;
-//	if(input==1)
-//		led_position++;
-//	if(input==2)
-//		led_position--;
-//	if(led_position==board_size)
-//		led_position=1;
-//	if(led_position==0)
-//		led_position=board_size-1;
-
 	/**
 	 * menu 0: Clock
 	 * menu 1: LED brightness - last 3 digits show value; first three are off
@@ -42,6 +32,10 @@ void run_output_mixer(uint8_t input){
 	 * 	minutes blink, change
 	 * press - safe time
 	 */
+
+	// Point 0 and 2 allways deactivated because not connected
+//	set_point(0, false);
+//	set_point(2, false);
 
 	if(input==4){
 		if(current_menu == 1 || current_menu==2 || current_menu==3){
@@ -60,18 +54,27 @@ void run_output_mixer(uint8_t input){
 		for(uint8_t i=0; i<6; i++){
 			set_color(i,OFF,25);	//hotfix für Papa
 		}
-
-		set_point(0, true);
-		set_point(1, true);
-		set_point(2, true);
-		set_point(3, true);
-
-		set_number(0, data_from_RTC.hours/10);
-		set_number(1, data_from_RTC.hours%10);
-		set_number(2, data_from_RTC.minutes/10);
-		set_number(3, data_from_RTC.minutes%10);
-		set_number(4, data_from_RTC.seconds/10);
-		set_number(5, data_from_RTC.seconds%10);
+		if(data_to_RTC.new_data!=true){				//do not refresh tube with data from RTC before new data is written to RTC
+													//without this, the old time will shine for a splitsecond when writing new time
+			set_number(0, data_from_RTC.hours/10);
+			set_number(1, data_from_RTC.hours%10);
+			set_number(2, data_from_RTC.minutes/10);
+			set_number(3, data_from_RTC.minutes%10);
+			set_number(4, data_from_RTC.seconds/10);
+			set_number(5, data_from_RTC.seconds%10);
+			if((data_from_RTC.seconds %2) ==true){
+				set_point(0, false);
+				set_point(1, false);
+				set_point(2, true);
+				set_point(3, true);
+			}
+			else{
+				set_point(0, true);
+				set_point(1, true);
+				set_point(2, false);
+				set_point(3, false);
+			}
+		}
 	}
 
 	if(current_menu == 1){		//LED brightness control
@@ -120,7 +123,7 @@ void run_output_mixer(uint8_t input){
 
 		if(current_state == 4){
 			current_menu=0;
-			write_time_i2c();
+			data_to_RTC.new_data = true;
 		}
 		if(current_state!=old_state){
 			for(uint8_t i=0; i<6; i++){
@@ -137,14 +140,14 @@ void run_output_mixer(uint8_t input){
 		}
 
 		if(timeout(blink_1_timer)==true){	//500ms loop
-			blink_1_timer = start_timer_ms(750);
+			blink_1_timer = start_timer_ms(500);
 			if(blink_state_1==true){
-				set_color((current_state*2)-1,GREEN,25);
-				set_color((current_state*2)-2,GREEN,25);
-			}
-			else{
 				set_color((current_state*2)-1,OFF,25);
 				set_color((current_state*2)-2,OFF,25);
+			}
+			else{
+				set_color((current_state*2)-1,GREEN,25);
+				set_color((current_state*2)-2,GREEN,25);
 			}
 			blink_state_1 = !blink_state_1;
 		}
@@ -192,9 +195,7 @@ void run_output_mixer(uint8_t input){
 		flyback_state = !flyback_state;
 		tmp = set_flyback_state(flyback_state);
 	}
-	if(tmp == true)
-		set_color(0, OFF, 25);	//hotfix für Papa
-	else
+	if(tmp != true)
 		set_color(0, RED , 1);	//hotfix für Papa
 
 	// Tube Output-Data
