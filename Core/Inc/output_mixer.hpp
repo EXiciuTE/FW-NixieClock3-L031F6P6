@@ -20,6 +20,16 @@
 #define TUBE_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
 
 void run_output_mixer(uint8_t);	//processes data and call output
+
+void submenu_0_display_time(void);
+void submenu_1_set_time(uint8_t);
+void submenu_2_set_date(uint8_t);
+void submenu_3_set_onoff(uint8_t);
+void submenu_4_set_led_color(uint8_t);
+void submenu_5_set_led_effect(uint8_t);
+void submenu_6_set_points(uint8_t);
+void submenu_9_menu_select(uint8_t);
+
 static uint32_t output_mixer_led_timer = 0;
 static uint32_t output_mixer_tube_timer = 0;
 static uint32_t blink_1_timer = 0;
@@ -27,7 +37,7 @@ static uint32_t blink_2_timer = 0;
 
 // menu variables
 static uint8_t current_menu = 0;
-static uint8_t new_menu = 0;
+static uint8_t selected_menu = 0;	//used for menu navigator
 static uint8_t current_state = 0;
 static uint8_t old_state = 0;
 

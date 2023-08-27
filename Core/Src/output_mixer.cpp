@@ -34,160 +34,106 @@ void run_output_mixer(uint8_t input){
 	 */
 
 	// Point 0 and 2 allways deactivated because not connected
-//	set_point(0, false);
-//	set_point(2, false);
+	set_point(0, false);
+	set_point(1, false);
+	set_point(2, false);
+	set_point(3, false);
 
-	if(input==4){
-		if(current_menu == 1 || current_menu==2 || current_menu==3){
-			current_state++;
-		}
-		else{
-			current_state=0;
-			current_menu++;
-		}
-	}
-	if(current_menu==4)
-		current_menu=0;
+	//disable everything in the beginning
+	set_number(0, 0x0);
+////	set_number(1, 0xA);
+////	set_number(2, 0xA);
+////	set_number(3, 0xA);
+////	set_number(4, 0xA);
+////	set_number(5, 0xA);
+//
+//
+//	//manage menu - button pressen?
+//	//activate menu - enter submenu with data
+//
+//	//menu system: 	default = 0 --> clock
+//	//				menu_select = 9 --> page to select menu 1-x ; 0=return to clock
+//
+////	if(input==4){
+////		if(current_menu == 1 || current_menu==2 || current_menu==3){
+////			current_state++;
+////		}
+////		else{
+////			current_state=0;
+////			current_menu++;
+////		}
+////	}
+//
+//	if(current_menu == 0 && input == 4){
+//		input=0;
+//		current_menu = 9;
+//		selected_menu = 1;
+//	}
+//	if(input == 8){
+//		//TODO: safe current settings
+//		current_menu = 0;
+//		input = 0;
+//	}
+//
+//	//select menus - change of menus is done in submenu 9 - this funktion sets new current menu
+////	if(current_menu==4){
+////		current_menu=0;
+////	}
+//
+//	if(current_menu == 0){		//standard clock
+//		submenu_0_display_time();
+//	}
+//
+//	if(current_menu == 1){	//time set function	- state 0 to 4
+//		submenu_1_set_time(input);
+//	}
+//
+//	if(current_menu == 9){
+//		submenu_9_menu_select(input);
+//		set_number(0, selected_menu);
+//	}
+//
+////	if(current_menu == 4){		//LED brightness control
+////		if(current_state==4){
+////			current_menu++;
+////			current_state=0;
+////		}
+////		switch(current_state){
+////			case 0: active_color = GREEN; break;
+////			case 1: active_color = RED; break;
+////			case 2: active_color = MAGENTA; break;
+////			case 3: active_color = ORANGE; break;
+////			default: break;
+////		}
+////
+////		switch(input){
+////			case 0x1:	brightness+=10;	break;
+////			case 0x2:	brightness-=10;	break;
+////			default: break;
+////		}
+////		if(brightness==246 || brightness>110)
+////			brightness = 100;
+////		if(brightness==110)
+////			brightness = 0;
+////
+////		for(uint8_t i=0; i<6; i++){
+////			if(brightness == 0)
+////				set_color(i,OFF,brightness);
+////			else
+////				set_color(i,active_color,brightness);
+////		}
+////
+////		set_number(0, 0xA);
+////		set_number(1, 0xA);
+////		set_number(2, 0xA);
+////		set_number(board_size-3, brightness/100);
+////		set_number(board_size-2, (brightness/10)%10);
+////		set_number(board_size-1, brightness % 10);
+////	}
 
 
-	if(current_menu == 0){		//standard clock
-		for(uint8_t i=0; i<6; i++){
-			set_color(i,OFF,25);	//hotfix für Papa
-		}
-		if(data_to_RTC.new_data!=true){				//do not refresh tube with data from RTC before new data is written to RTC
-													//without this, the old time will shine for a splitsecond when writing new time
-			set_number(0, data_from_RTC.hours/10);
-			set_number(1, data_from_RTC.hours%10);
-			set_number(2, data_from_RTC.minutes/10);
-			set_number(3, data_from_RTC.minutes%10);
-			set_number(4, data_from_RTC.seconds/10);
-			set_number(5, data_from_RTC.seconds%10);
-			if((data_from_RTC.seconds %2) ==true){
-				set_point(0, false);
-				set_point(1, false);
-				set_point(2, true);
-				set_point(3, true);
-			}
-			else{
-				set_point(0, true);
-				set_point(1, true);
-				set_point(2, false);
-				set_point(3, false);
-			}
-		}
-	}
 
-	if(current_menu == 1){		//LED brightness control
-		if(current_state==4){
-			current_menu++;
-			current_state=0;
-		}
-		switch(current_state){
-			case 0: active_color = GREEN; break;
-			case 1: active_color = RED; break;
-			case 2: active_color = MAGENTA; break;
-			case 3: active_color = ORANGE; break;
-			default: break;
-		}
-
-		switch(input){
-			case 0x1:	brightness+=10;	break;
-			case 0x2:	brightness-=10;	break;
-			default: break;
-		}
-		if(brightness==246 || brightness>110)
-			brightness = 100;
-		if(brightness==110)
-			brightness = 0;
-
-		for(uint8_t i=0; i<6; i++){
-			if(brightness == 0)
-				set_color(i,OFF,brightness);
-			else
-				set_color(i,active_color,brightness);
-		}
-
-		set_number(0, 0xA);
-		set_number(1, 0xA);
-		set_number(2, 0xA);
-		set_number(board_size-3, brightness/100);
-		set_number(board_size-2, (brightness/10)%10);
-		set_number(board_size-1, brightness % 10);
-	}
-
-	if(current_menu == 2){	//time set function	- state 0 to 4
-		if(current_state == 3 && board_size==4){
-			current_state++;
-			data_to_RTC.seconds = 0;
-		}
-
-		if(current_state == 4){
-			current_menu=0;
-			data_to_RTC.new_data = true;
-		}
-		if(current_state!=old_state){
-			for(uint8_t i=0; i<6; i++){
-				set_color(i,GREEN,25);
-			}
-			old_state=current_state;
-		}
-
-		if(current_state == 0){
-			data_to_RTC.seconds = data_from_RTC.seconds;
-			data_to_RTC.minutes = data_from_RTC.minutes;
-			data_to_RTC.hours = data_from_RTC.hours;
-			current_state++;
-		}
-
-		if(timeout(blink_1_timer)==true){	//500ms loop
-			blink_1_timer = start_timer_ms(500);
-			if(blink_state_1==true){
-				set_color((current_state*2)-1,OFF,25);
-				set_color((current_state*2)-2,OFF,25);
-			}
-			else{
-				set_color((current_state*2)-1,GREEN,25);
-				set_color((current_state*2)-2,GREEN,25);
-			}
-			blink_state_1 = !blink_state_1;
-		}
-
-		switch(current_state){
-			case 0x1: number_value = data_to_RTC.hours; break;
-			case 0x2: number_value = data_to_RTC.minutes; break;
-			case 0x3: number_value = data_to_RTC.seconds; break;
-			default: break;
-		}
-
-		switch(input){
-			case 0x1:	number_value++;	break;
-			case 0x2:	number_value--;	break;
-			default: break;
-		}
-
-		if(((number_value==60) && ((current_state==3) || (current_state==2))) || (number_value==24 && current_state==1))
-			number_value = 0;
-		if(number_value==255){
-			if(current_state==3 || current_state==2)
-				number_value = 59;
-			else
-				number_value = 23;
-		}
-
-		switch(current_state){
-			case 0x1: data_to_RTC.hours = number_value; break;
-			case 0x2: data_to_RTC.minutes = number_value; break;
-			case 0x3: data_to_RTC.seconds = number_value; break;
-			default: break;
-		}
-
-		set_number(0, data_to_RTC.hours/10);
-		set_number(1, data_to_RTC.hours%10);
-		set_number(2, data_to_RTC.minutes/10);
-		set_number(3, data_to_RTC.minutes%10);
-		set_number(4, data_to_RTC.seconds/10);
-		set_number(5, data_to_RTC.seconds%10);
-	}
+	//############################ run Output Handler ############################
 
 	// switch HV-enable pin by long press of button - change led to indicate state (RED = ON, GREEN = OFF)
 	static bool tmp = false;
@@ -214,4 +160,112 @@ void run_output_mixer(uint8_t input){
 	}
 }
 
+void submenu_0_display_time(void){
+	for(uint8_t i=0; i<6; i++){
+		set_color(i,OFF,25);	//hotfix für Papa
+	}
+	if(data_to_RTC.new_data!=true){				//do not refresh tube with data from RTC before new data is written to RTC
+												//without this, the old time will shine for a splitsecond when writing new time
+		set_number(0, data_from_RTC.hours/10);
+		set_number(1, data_from_RTC.hours%10);
+		set_number(2, data_from_RTC.minutes/10);
+		set_number(3, data_from_RTC.minutes%10);
+		set_number(4, data_from_RTC.seconds/10);
+		set_number(5, data_from_RTC.seconds%10);
+		if((data_from_RTC.seconds %2) ==true){
+			set_point(1, false);
+			set_point(3, true);
+		}
+		else{
+			set_point(1, true);
+			set_point(3, false);
+		}
+	}
+}
 
+void submenu_1_set_time(uint8_t input){
+	if(current_state == 3 && board_size==4){
+		current_state++;
+		data_to_RTC.seconds = 0;
+	}
+
+	if(current_state == 4){
+		current_menu=0;
+		data_to_RTC.new_data = true;
+	}
+	if(current_state!=old_state){
+		for(uint8_t i=0; i<6; i++){
+			set_color(i,GREEN,25);
+		}
+		old_state=current_state;
+	}
+
+	if(current_state == 0){
+		data_to_RTC.seconds = data_from_RTC.seconds;
+		data_to_RTC.minutes = data_from_RTC.minutes;
+		data_to_RTC.hours = data_from_RTC.hours;
+		current_state++;
+	}
+
+	if(timeout(blink_1_timer)==true){	//500ms loop
+		blink_1_timer = start_timer_ms(500);
+		if(blink_state_1==true){
+			set_color((current_state*2)-1,OFF,25);
+			set_color((current_state*2)-2,OFF,25);
+		}
+		else{
+			set_color((current_state*2)-1,GREEN,25);
+			set_color((current_state*2)-2,GREEN,25);
+		}
+		blink_state_1 = !blink_state_1;
+	}
+
+	switch(current_state){
+		case 0x1: number_value = data_to_RTC.hours; break;
+		case 0x2: number_value = data_to_RTC.minutes; break;
+		case 0x3: number_value = data_to_RTC.seconds; break;
+		default: break;
+	}
+
+	switch(input){
+		case 0x1:	number_value++;	break;
+		case 0x2:	number_value--;	break;
+		default: break;
+	}
+
+	if(((number_value==60) && ((current_state==3) || (current_state==2))) || (number_value==24 && current_state==1))
+		number_value = 0;
+	if(number_value==255){
+		if(current_state==3 || current_state==2)
+			number_value = 59;
+		else
+			number_value = 23;
+	}
+
+	switch(current_state){
+		case 0x1: data_to_RTC.hours = number_value; break;
+		case 0x2: data_to_RTC.minutes = number_value; break;
+		case 0x3: data_to_RTC.seconds = number_value; break;
+		default: break;
+	}
+
+	set_number(0, data_to_RTC.hours/10);
+	set_number(1, data_to_RTC.hours%10);
+	set_number(2, data_to_RTC.minutes/10);
+	set_number(3, data_to_RTC.minutes%10);
+	set_number(4, data_to_RTC.seconds/10);
+	set_number(5, data_to_RTC.seconds%10);
+}
+
+void submenu_9_menu_select(uint8_t input){
+	if(input == 0x1)
+		selected_menu++;
+	if(input == 0x2)
+		selected_menu--;
+	if(selected_menu == 255)
+		selected_menu = 5;
+	if(selected_menu == 6)
+		selected_menu = 0;
+	if(input == 0x4)
+		current_menu = selected_menu;
+}
