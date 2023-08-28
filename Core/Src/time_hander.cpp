@@ -25,6 +25,8 @@ void run_time_handler(void){
 		data_to_RTC.new_data = false;
 	}
 
+	//TODO: add summertime
+
 	if(timeout(time_handler_timer)){
 		time_handler_timer = start_timer_ms(TIME_UPDATE_MS);
 

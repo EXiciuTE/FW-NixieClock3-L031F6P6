@@ -17,9 +17,9 @@
  */
 void set_color(uint8_t led_number, uint32_t hex_code, uint8_t brightness){
 	brightness_controller = 0;
-	led_data[led_number]=0;
 	if(led_number>=MAX_LED)
 		led_number=MAX_LED-1;
+	led_data[led_number]=0;
 	if(brightness>100)
 		brightness = 100;
 	if(brightness<1)

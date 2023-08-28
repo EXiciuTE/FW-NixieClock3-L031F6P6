@@ -40,9 +40,11 @@ static uint8_t current_menu = 0;
 static uint8_t selected_menu = 0;	//used for menu navigator
 static uint8_t current_state = 0;
 static uint8_t old_state = 0;
+static bool	data_to_safe = false;
 
 // misc variables
 static uint32_t active_color=GREEN;
+static bool flyback_status=false;
 
 //debug
 static uint8_t brightness = 0;
