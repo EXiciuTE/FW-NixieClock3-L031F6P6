@@ -74,6 +74,7 @@ void run_output_mixer(uint8_t input){
 		input=0;
 	}
 
+	//menu date set
 	if(current_menu == 2){
 		submenu_2_set_date(input,new_selected_menu);
 		new_selected_menu = false;
@@ -212,7 +213,7 @@ void submenu_1_set_time(uint8_t local_input, bool new_entry){
 	//leave setting and safe changes - go back to menu selection
 	if(current_state == 4){
 		current_menu = 9;
-		data_to_RTC.new_data = true;
+		data_to_RTC.new_data = 1;	//1 means new time data
 		//TODO: add animation for safed data
 	}
 
@@ -272,8 +273,118 @@ void submenu_1_set_time(uint8_t local_input, bool new_entry){
 	set_number(5, data_to_RTC.seconds%10);
 }
 
+/**
+ * @brief: function to set new date to RTC | day | date+month | year
+ * @param: enter input info 0x1=left; 0x2=right; 0x4=press; 0x8=long press
+ * @param: new_entry set true, when menu is entered through menu select
+ */
 void submenu_2_set_date(uint8_t local_input, bool new_entry){
+	uint16_t value = 0;
+	static bool blink_state = false;
+	static uint32_t blink_timer = 0;
+	static uint8_t current_state = 0;
+	static uint16_t val_min[4]={0,0,0,1899};
+	static uint16_t val_max[4]={8,32,13,2101};
 
+	if(new_entry == true){
+		current_state = 1;
+		data_to_RTC.day = data_from_RTC.day;
+		data_to_RTC.date = data_from_RTC.date;
+		data_to_RTC.month = data_from_RTC.month;
+		data_to_RTC.year = data_from_RTC.year;
+		blink_state = false;
+	}
+
+	//skip setting for seconds, they can't be shown anyway
+	if(local_input==0x4){
+		current_state++;
+		local_input=0;
+		blink_state = false;
+	}
+
+	//leave setting and safe changes - go back to menu selection
+	if(current_state == 5){
+		current_menu = 9;
+		data_to_RTC.new_data = 2;	//2 means new date data
+		//TODO: add animation for safed data
+	}
+
+	//blink active digits
+	uint16_t blink_color = 0;
+	if(blink_state==true)
+		blink_color = GREEN;
+	else
+		blink_color = 0;
+
+	if(current_state==1)
+		set_color(1,blink_color,25);
+	if(current_state==2){
+		set_color(0,blink_color,25);
+		set_color(1,blink_color,25);
+	}
+	if(current_state==3){
+		set_color(2,blink_color,25);
+		set_color(3,blink_color,25);
+	}
+	if(current_state==4){
+		set_color(0,blink_color,25);
+		set_color(1,blink_color,25);
+		set_color(2,blink_color,25);
+		set_color(3,blink_color,25);
+	}
+
+	if(timeout(blink_timer)==true){	//500ms loop
+		blink_timer = start_timer_ms(500);
+		blink_state = !blink_state;
+	}
+
+	//copy time info into local variable for manipulation and checks
+	switch(current_state){
+		case 0x1: value = data_to_RTC.day; break;
+		case 0x2: value = data_to_RTC.date; break;
+		case 0x3: value = data_to_RTC.month; break;
+		case 0x4: value = data_to_RTC.year; break;
+		default: break;
+	}
+
+	//change data according to input
+	switch(local_input){
+		case 0x1:	value++;	break;
+		case 0x2:	value--;	break;
+		default: break;
+	}
+
+	//correction for overrunning of valid value area
+	if(value==val_max[current_state-1])
+		value = val_min[current_state-1]+1;
+	if(value==val_min[current_state-1])
+		value = val_max[current_state-1]-1;
+
+	//write manipulated value back to time struct
+	switch(current_state){
+		case 0x1: data_to_RTC.day = value; break;
+		case 0x2: data_to_RTC.date = value; break;
+		case 0x3: data_to_RTC.month = value; break;
+		case 0x4: data_to_RTC.year = value; break;
+		default: break;
+	}
+
+	//display output
+	if(current_state == 1){	//day
+		set_number(1,data_to_RTC.day);
+	}
+	if(current_state == 2 || current_state == 3){	//date+month
+		set_number(0,data_to_RTC.date/10);
+		set_number(1,data_to_RTC.date%10);
+		set_number(2,data_to_RTC.month/10);
+		set_number(3,data_to_RTC.month%10);
+	}
+	if(current_state == 4){	//year
+		set_number(0,data_to_RTC.year/1000);
+		set_number(1,(data_to_RTC.year/100)%10);
+		set_number(2,(data_to_RTC.year/10)%10);
+		set_number(3,data_to_RTC.year%10);
+	}
 }
 
 /**

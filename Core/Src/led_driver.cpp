@@ -11,7 +11,7 @@
 
 /*
  * @brief function to write new color to output queue
- * @param led_number number to which led the color should be applied
+ * @param led_number number to which led the color should be applied [0-5]
  * @param hex_code	enter RGB Hex code of color or use predefined values
  * @param brightness choose brightness level between 1 and 100 - brightness cannot turn led off
  */

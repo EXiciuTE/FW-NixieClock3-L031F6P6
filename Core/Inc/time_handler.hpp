@@ -53,7 +53,7 @@ struct time_struct {
 	uint16_t year = 0;
 	bool century = 1;
 	bool summer_time = 0;
-	bool new_data=0;
+	uint8_t new_data=0;	//0 = false; 1 = new time; 2 = new date
 };
 
 extern time_struct data_from_RTC;	//data read from RTC gets here

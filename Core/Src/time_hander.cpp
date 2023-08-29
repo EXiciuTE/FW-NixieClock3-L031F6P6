@@ -18,11 +18,13 @@ struct time_struct data_to_RTC;
  * @brief function is constantly called to get fresh time data from rtc - get time every 500ms
  */
 void run_time_handler(void){
-	if(data_to_RTC.new_data==true){
-		data_to_RTC.new_data = false;
+	if(data_to_RTC.new_data==1){
+		data_to_RTC.new_data = 0;
 		write_time_i2c();
+	}
+	if(data_to_RTC.new_data==2){
+		data_to_RTC.new_data = 0;
 		write_date_i2c();
-		data_to_RTC.new_data = false;
 	}
 
 	//TODO: add summertime
@@ -105,7 +107,8 @@ void read_date_i2c(void){
 	data_from_RTC.date = ((temp[1]&0x30)>>4)*10 + (temp[1]&0x0f);
 	data_from_RTC.month = ((temp[2]&0x10)>>4)*10 + (temp[2]&0x0f);
 	data_from_RTC.century = (temp[2] & 0x80) >> 7;	//if century == 1 --> year is bigger that 2000
-	data_from_RTC.year = 1900 + (data_from_RTC.century * 100) + ((temp[3]&0xf0)>>4)*10 + (temp[3]%0x0f);
+	data_from_RTC.year = 1900 + (data_from_RTC.century * 100);
+	data_from_RTC.year = data_from_RTC.year + (((temp[3]&0xf0)>>4)*10) + ((temp[3]&0x0f)%10);
 }
 
 /**
@@ -113,7 +116,7 @@ void read_date_i2c(void){
  * read data from data_to_RTC and transfer to RTC
  */
 void write_date_i2c(void){
-	uint8_t temp[5];
+	uint8_t temp[5]={0};
 	temp[0] = ADDR_DAY;	//start address for write operation
 	temp[1] = data_to_RTC.day;
 	temp[2] = ((data_to_RTC.date/10)<<4)|data_to_RTC.date%10;
