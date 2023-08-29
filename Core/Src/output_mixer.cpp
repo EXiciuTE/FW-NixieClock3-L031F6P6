@@ -57,7 +57,7 @@ void run_output_mixer(uint8_t input){
 	if((input == 8) && (current_menu!=0)){
 		//TODO: safe current settings
 		current_menu = 0;
-		current_state = 0;
+//		current_state = 0;
 		old_state = 0;
 		input = 0;
 	}
@@ -69,12 +69,21 @@ void run_output_mixer(uint8_t input){
 
 	//menu time set
 	if(current_menu == 1){
-		submenu_1_set_time(input);
+		submenu_1_set_time(input,new_selected_menu);
+		new_selected_menu = false;
+		input=0;
+	}
+
+	if(current_menu == 2){
+		submenu_2_set_date(input,new_selected_menu);
+		new_selected_menu = false;
+		input=0;
 	}
 
 	//menu menu ;)
 	if(current_menu == 9){
-		submenu_9_menu_select(input);
+		new_selected_menu = submenu_9_menu_select(input);
+		input=0;
 		set_number(0, selected_menu);
 	}
 
@@ -116,14 +125,11 @@ void run_output_mixer(uint8_t input){
 //		set_number(board_size-1, brightness % 10);
 //	}
 
-	set_number(3, current_state);
-
 	//############################ run Output Handler ############################
 
 	// switch HV-enable pin by long press of button - change led to indicate state (RED = ON, GREEN = OFF)
 	static bool tmp = false;
 	if(input==0x8){		//Long Press
-//		input=0;
 		flyback_status = !flyback_status;
 		tmp = set_flyback_state(flyback_status);
 	}
@@ -175,13 +181,27 @@ void submenu_0_display_time(void){
 /**
  * @brief function to enter new time data - copies the current time, displays it, change it and tell the time handler to safe it to rtc
  * @param: enter input info 0x1=left; 0x2=right; 0x4=press; 0x8=long press
+ * @param: new_entry set true, when menu is entered through menu select
  */
-void submenu_1_set_time(uint8_t input){
+void submenu_1_set_time(uint8_t local_input, bool new_entry){
+	uint8_t number_value = 0;
+	static bool blink_state = false;
+	static uint32_t blink_timer = 0;
+	static uint8_t current_state = 0;
+
+	if(new_entry == true){
+		current_state = 1;
+		data_to_RTC.seconds = data_from_RTC.seconds;
+		data_to_RTC.minutes = data_from_RTC.minutes;
+		data_to_RTC.hours = data_from_RTC.hours;
+		blink_state = false;
+	}
+
 	//skip setting for seconds, they can't be shown anyway
-	if(input==0x4){
+	if(local_input==0x4){
 		current_state++;
-		input=0;
-		blink_state_1 = false;
+		local_input=0;
+		blink_state = false;
 	}
 
 	if(current_state == 3 && board_size==4){
@@ -196,17 +216,8 @@ void submenu_1_set_time(uint8_t input){
 		//TODO: add animation for safed data
 	}
 
-	//copy time info for manipulation
-	if(current_state == 0){
-		data_to_RTC.seconds = data_from_RTC.seconds;
-		data_to_RTC.minutes = data_from_RTC.minutes;
-		data_to_RTC.hours = data_from_RTC.hours;
-		current_state++;
-		blink_state_1 = false;
-	}
-
 	//blink active digits
-	if(blink_state_1==true){
+	if(blink_state==true){
 		set_color((current_state*2)-1,OFF,25);
 		set_color((current_state*2)-2,OFF,25);
 	}
@@ -214,9 +225,9 @@ void submenu_1_set_time(uint8_t input){
 		set_color((current_state*2)-1,GREEN,25);
 		set_color((current_state*2)-2,GREEN,25);
 	}
-	if(timeout(blink_1_timer)==true){	//500ms loop
-		blink_1_timer = start_timer_ms(500);
-		blink_state_1 = !blink_state_1;
+	if(timeout(blink_timer)==true){	//500ms loop
+		blink_timer = start_timer_ms(500);
+		blink_state = !blink_state;
 	}
 
 	//copy time info into local variable for manipulation and checks
@@ -228,7 +239,7 @@ void submenu_1_set_time(uint8_t input){
 	}
 
 	//change data according to input
-	switch(input){
+	switch(local_input){
 		case 0x1:	number_value++;	break;
 		case 0x2:	number_value--;	break;
 		default: break;
@@ -261,23 +272,29 @@ void submenu_1_set_time(uint8_t input){
 	set_number(5, data_to_RTC.seconds%10);
 }
 
+void submenu_2_set_date(uint8_t local_input, bool new_entry){
+
+}
 
 /**
  * @brief: function to select new setting option
  * @param: enter input info 0x1=left; 0x2=right; 0x4=press; 0x8=long press
  */
-void submenu_9_menu_select(uint8_t input){
-	if(input == 0x1)
+bool submenu_9_menu_select(uint8_t local_input){
+	if(local_input == 0x1)
 		selected_menu++;
-	if(input == 0x2)
+	if(local_input == 0x2)
 		selected_menu--;
 	if(selected_menu == 255)
-		selected_menu = 5;
-	if(selected_menu == 6)
+		selected_menu = 6;
+	if(selected_menu == 7)
 		selected_menu = 0;
-	if(input == 0x4){
+	if(local_input == 0x4){
 		current_menu = selected_menu;
-		current_state=0;	//reset state when entering new menu
+		return true;
+		//TODO: move current state to separat subfunctions
+		//		current_state=0;	//reset state when entering new menu
 	}
-	input=0;
+	else
+		return false;
 }
