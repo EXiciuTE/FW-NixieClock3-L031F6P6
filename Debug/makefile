@@ -67,6 +67,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 FW-NixieClock3-L031F6P6.list \
 
+OBJCOPY_BIN += \
+FW-NixieClock3-L031F6P6.bin \
+
 
 # All Target
 all: main-build
@@ -90,12 +93,17 @@ FW-NixieClock3-L031F6P6.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TO
 	@echo 'Finished building: $@'
 	@echo ' '
 
+FW-NixieClock3-L031F6P6.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "FW-NixieClock3-L031F6P6.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) FW-NixieClock3-L031F6P6.elf FW-NixieClock3-L031F6P6.list FW-NixieClock3-L031F6P6.map default.size.stdout
+	-$(RM) FW-NixieClock3-L031F6P6.bin FW-NixieClock3-L031F6P6.elf FW-NixieClock3-L031F6P6.list FW-NixieClock3-L031F6P6.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
