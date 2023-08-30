@@ -55,7 +55,7 @@ void read_time_i2c(void){
 	HAL_I2C_Master_Transmit(&hi2c1, DS3231_MASTER_ADDRESS, (uint8_t *)temp, 1, 10);
 	HAL_I2C_Master_Receive(&hi2c1, DS3231_SLAVE_ADDRESS, (uint8_t *)temp, 3, 10);
 
-	data_from_RTC.seconds = ((temp[0]&0xf0)>>4)*10 + (temp[0]&0x0f);	//converstion from hex to dec
+	data_from_RTC.seconds = ((temp[0]&0xf0)>>4)*10 + (temp[0]&0x0f);	//conversion from hex to dec
 	data_from_RTC.minutes = ((temp[1]&0xf0)>>4)*10 + (temp[1]&0x0f);
 	data_from_RTC.hours = ((temp[2]&0x30)>>4)*10 + (temp[2]&0x0f);
 
@@ -132,11 +132,14 @@ void dls_check(bool flag_only){
 
 	//read DLS bit
 	dls_active = read_i2c_single(ADDR_A1SECONDS);
-	if(dls_active==0x1)
+	if(dls_active==0x1){
 		offset = 1;
-	else
+		data_from_RTC.summer_time = true;
+	}
+	else{
 		offset = 0;
-
+		data_from_RTC.summer_time = false;
+	}
 	//check date + time: Should DLS be active?
 	if((data_from_RTC.month == 3 && data_from_RTC.date>=25 && data_from_RTC.day==7 && data_from_RTC.hours>=2 )	//March, last sunday, later than 02:00
 	 || (data_from_RTC.month == 3 && data_from_RTC.day<=6 && (data_from_RTC.date-data_from_RTC.day)>=25 )		//March after last sunday
@@ -155,6 +158,7 @@ void dls_check(bool flag_only){
 	if(dls_active == false && dls_needed == true){
 		if(flag_only==false){
 			write_i2c_single(ADDR_HOURS, data_from_RTC.hours+1);
+			data_from_RTC.hours++;		//alter local variable, so no new read is required before new value is displayed
 			//increase RTC by one hour - should only happen when summer is reached, not through time set
 		}
 		write_i2c_single(ADDR_A1SECONDS, 0x1);	//set DLS FLAG
@@ -162,6 +166,7 @@ void dls_check(bool flag_only){
 	if(dls_active == true && dls_needed == false){
 		if(flag_only == false){
 			write_i2c_single(ADDR_HOURS, data_from_RTC.hours-1);
+			data_from_RTC.hours--;
 			//decrease RTC by one hour - should only happen when winter is reached, not through time set
 		}
 		write_i2c_single(ADDR_A1SECONDS, 0x0);	//reset DLS FLAG
@@ -176,7 +181,7 @@ void dls_check(bool flag_only){
 void write_i2c_single(uint8_t cmd, uint8_t data){
 	uint8_t data_t[2];
 	data_t[0] = cmd;
-	data_t[0] = data;
+	data_t[1] = data;
 	HAL_I2C_Master_Transmit(&hi2c1, DS3231_MASTER_ADDRESS, (uint8_t *)data_t, 2, 100);
 }
 
