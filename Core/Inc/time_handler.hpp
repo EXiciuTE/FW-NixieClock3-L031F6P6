@@ -63,9 +63,7 @@ void write_time_i2c(void);
 void read_time_i2c(void);	//read on startup to get time info in RAM
 void write_date_i2c(void);
 void read_date_i2c(void);	//read on startup to get date info in RAM
-
-void set_time();			// enter time to write to RTC
-
+void dls_check(bool);		//check for daylight saving
 // update time and date from RTC
 void run_time_handler(void);
 

@@ -126,6 +126,8 @@ void run_output_mixer(uint8_t input){
 //		set_number(board_size-1, brightness % 10);
 //	}
 
+	set_number(3, 6);	//DEBUG
+
 	//############################ run Output Handler ############################
 
 	// switch HV-enable pin by long press of button - change led to indicate state (RED = ON, GREEN = OFF)
