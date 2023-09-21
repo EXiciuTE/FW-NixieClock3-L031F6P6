@@ -53,9 +53,8 @@ void run_output_mixer(uint8_t input){
 		current_menu = 9;
 		selected_menu = 1;
 	}
-	//leave menu
-	if((input == 8) && (current_menu!=0)){
-		//TODO: safe current settings
+	//leave menu - without saving for menu 1 & 2
+	if((input == 0x8) && (current_menu!=0) && (current_menu!=3)){
 		current_menu = 0;
 //		current_state = 0;
 		old_state = 0;
@@ -69,14 +68,20 @@ void run_output_mixer(uint8_t input){
 
 	//menu time set
 	if(current_menu == 1){
-		submenu_1_set_time(input,new_selected_menu);
+		submenu_1_set_time(input, new_selected_menu);
 		new_selected_menu = false;
 		input=0;
 	}
 
 	//menu date set
 	if(current_menu == 2){
-		submenu_2_set_date(input,new_selected_menu);
+		submenu_2_set_date(input, new_selected_menu);
+		new_selected_menu = false;
+		input=0;
+	}
+
+	if(current_menu == 3){
+		submenu_3_set_onoff(input, new_selected_menu);
 		new_selected_menu = false;
 		input=0;
 	}
@@ -385,6 +390,107 @@ void submenu_2_set_date(uint8_t local_input, bool new_entry){
 		set_number(2,(data_to_RTC.year/10)%10);
 		set_number(3,data_to_RTC.year%10);
 	}
+}
+
+/**
+ * @brief function to set different time-zones when the clock should be acitve
+ * @param: enter input info 0x1=left; 0x2=right; 0x4=press; 0x8=long press
+ * @param: new_entry set true, when menu is entered through menu select
+ */
+void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
+	uint8_t number_value = 0;
+	static bool blink_state = false;
+	static uint32_t blink_timer = 0;
+	static uint8_t current_state = 0;
+	static uint8_t current_substate = 0;
+
+	//current state: 0 - 8; each state contains 6 substates: start day, end day, start time hours/minutes, endtime hours/minutes
+
+	if(new_entry == true){
+		current_state = 0;
+		current_substate = 0;
+		blink_state = false;
+	}
+
+	//handle menu control
+	if(local_input == 0x4){
+		current_substate++;
+		if(current_substate==6){
+			current_state++;
+			current_substate = 0;
+		}
+		local_input=0;
+		blink_state = false;
+	}
+
+
+	if(local_input == 0x8){	//safe made changes and leave
+		current_menu = 9;
+		//TODO: safe settings
+	}
+
+	if(current_state == 8){
+		current_state = 7;	//set state back to legal value to prevent writing in illegal memory space
+		current_menu = 9;
+		//TODO: safe settings
+	}
+
+	//menu function
+	number_value = on_time[current_state][current_substate];
+
+	//change data according to input
+	switch(local_input){
+		case 0x1:	number_value++;	break;
+		case 0x2:	number_value--;	break;
+		default: break;
+	}
+
+	if(current_substate == 0 || current_substate == 1){	//days
+		if(number_value == 0)
+			number_value = 7;
+		if(number_value == 8)
+			number_value = 1;
+	}
+	if(current_substate == 2 || current_substate == 4){ //hours
+		if(number_value == 255)
+			number_value = 23;
+		if(number_value == 24)
+			number_value = 0;
+	}
+	if(current_substate == 3 || current_substate == 5){ //minutes
+		if(number_value == 255)
+			number_value = 59;
+		if(number_value == 60)
+			number_value = 0;
+	}
+
+	on_time[current_state][current_substate] = number_value;
+
+	//display output
+	if(current_substate == 0){
+		set_number(1, number_value);
+		set_number(3, on_time[current_state][1]);
+	}
+	if(current_substate == 1){
+		set_number(1, on_time[current_state][0]);
+		set_number(3, number_value);
+	}
+	if(current_substate == 2 || current_substate == 4){
+		set_number(0, number_value/10);
+		set_number(1, number_value%10);
+		set_number(2, on_time[current_state][current_substate+1]/10);
+		set_number(3, on_time[current_state][current_substate+1]%10);
+
+	}
+	if(current_substate == 3 || current_substate == 5){
+		set_number(0, on_time[current_state][current_substate-1]/10);
+		set_number(1, on_time[current_state][current_substate-1]%10);
+		set_number(2, number_value/10);
+		set_number(3, number_value%10);
+	}
+	//debug
+	set_number(4, current_state);
+	set_number(5, current_substate);
 }
 
 /**

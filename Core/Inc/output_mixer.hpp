@@ -24,7 +24,7 @@ void run_output_mixer(uint8_t);	//processes data and call output
 void submenu_0_display_time(void);
 void submenu_1_set_time(uint8_t, bool);
 void submenu_2_set_date(uint8_t, bool);
-void submenu_3_set_onoff(uint8_t);
+void submenu_3_set_onoff(uint8_t, bool);
 void submenu_4_set_led_color(uint8_t);
 void submenu_5_set_led_effect(uint8_t);
 void submenu_6_set_points(uint8_t);
