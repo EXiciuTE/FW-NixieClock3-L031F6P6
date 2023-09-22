@@ -145,8 +145,9 @@ void run_output_mixer(uint8_t input){
 		for(uint8_t i=0;i<8;i++){
 			//if current day inside selected days for each time area
 			if(data_from_RTC.day >= on_time[i][0] && data_from_RTC.day <= on_time[i][1]){
-				if(	(data_from_RTC.hours == on_time[i][2] && data_from_RTC.minutes >= on_time[i][3]) ||
-					(data_from_RTC.hours == on_time[i][4] && data_from_RTC.minutes <= on_time[i][5]) ||
+				if(	(data_from_RTC.hours == on_time[i][2] && data_from_RTC.minutes >= on_time[i][3] && on_time[i][2] != on_time[i][4]) ||
+					(data_from_RTC.hours == on_time[i][4] && data_from_RTC.minutes <= on_time[i][5] && on_time[i][2] != on_time[i][4]) ||
+					(on_time[i][2] == on_time[i][4] && data_from_RTC.hours == on_time[i][2] && data_from_RTC.minutes >= on_time[i][3] && data_from_RTC.minutes <= on_time[i][5]) ||
 					(data_from_RTC.hours > on_time[i][2] && data_from_RTC.hours < on_time[i][4])){
 						//currently inside of active time area
 						if(area_entered == false){
