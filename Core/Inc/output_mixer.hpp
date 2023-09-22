@@ -37,7 +37,6 @@ static uint32_t output_mixer_tube_timer = 0;
 static uint8_t current_menu = 0;
 static uint8_t selected_menu = 0;	//used for menu navigator
 static bool new_selected_menu = false;
-//static uint8_t current_state = 0;	//move to subfunctions instead!
 static uint8_t old_state = 0;
 //static bool	data_to_safe = false;
 

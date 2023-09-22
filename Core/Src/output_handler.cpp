@@ -76,9 +76,7 @@ void set_point(uint8_t point_number, bool state){
  * @brief function to send data to output
  */
 void set_output(void){
-	if(board_size == 6)
-		spi_data[0] = spi_data[0];
-	else
+	if(board_size != 6)
 		spi_data[0] = 0x00;
 	spi_write();
 }

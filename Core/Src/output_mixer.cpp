@@ -38,7 +38,7 @@ void run_output_mixer(uint8_t input){
 	for(uint8_t i = 0; i<6; i++){
 		set_point(i, false);
 		set_number(i, 0xA);
-		set_color(i, 0x0, 0x0);
+		set_color(i, OFF, 25);
 	}
 
 	//manage menu - button pressen?
@@ -133,15 +133,59 @@ void run_output_mixer(uint8_t input){
 
 	//############################ run Output Handler ############################
 
-	// switch HV-enable pin by long press of button - change led to indicate state (RED = ON, GREEN = OFF)
-	static bool tmp = false;
+
+	static bool hv_on = false;
+	static bool area_entered = false;	// variable only changes if area is entered/left - does occur once per area
+	static bool area_left = false;
+	bool inside_area = false;
+
+	if(current_menu == 0){	//only check for time area, when not in the menu
+		// switch HV-enable when time-area is entered/left
+		// manual long press overwrites state until the next area is entered/left
+		for(uint8_t i=0;i<8;i++){
+			//if current day inside selected days for each time area
+			if(data_from_RTC.day >= on_time[i][0] && data_from_RTC.day <= on_time[i][1]){
+				if(	(data_from_RTC.hours == on_time[i][2] && data_from_RTC.minutes >= on_time[i][3]) ||
+					(data_from_RTC.hours == on_time[i][4] && data_from_RTC.minutes <= on_time[i][5]) ||
+					(data_from_RTC.hours > on_time[i][2] && data_from_RTC.hours < on_time[i][4])){
+						//currently inside of active time area
+						if(area_entered == false){
+							area_entered = true;
+							area_left = false;
+							flyback_status = true;
+							hv_on = set_flyback_state(flyback_status);
+						}
+						inside_area = true;
+						break;
+				}
+				inside_area = false;
+			}
+			else
+				inside_area = false;
+
+		}
+		//check if we have to switch the hv off
+		if(inside_area == false && area_left == false){
+			area_entered = false;
+			area_left = true;
+			flyback_status = false;
+			hv_on = set_flyback_state(flyback_status);
+		}
+	}
+	if(inside_area == true)
+		set_color(5, GREEN,10);
+	else
+		set_color(5, RED,10);
+
+	// switch HV-enable pin by long press of button - change led to indicate state (RED = OFF, dark = ON)
 	if(input==0x8){		//Long Press
 		flyback_status = !flyback_status;
-		tmp = set_flyback_state(flyback_status);
+		hv_on = set_flyback_state(flyback_status);
 	}
-	if(tmp != true)
-		set_color(0, RED , 1);	//hotfix für Papa
+	if(hv_on != true)
+		set_color(0, CYAN , 10);
 
+	set_point(1, true);	//DEBUG
 	// Tube Output-Data
 	if(timeout(output_mixer_tube_timer)){
 		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
@@ -151,9 +195,6 @@ void run_output_mixer(uint8_t input){
 	//	Time LED-Output
 	if(timeout(output_mixer_led_timer)){
 		output_mixer_led_timer = start_timer_ms(LED_REFRESH_RATE_MS);
-//		for(uint8_t i=1; i<6; i++){
-//			set_color(i,led_info[i][0],led_info[i][1]);
-//		}
 		send_data(true);
 	}
 }
@@ -162,9 +203,9 @@ void run_output_mixer(uint8_t input){
  * @brief: default "menu" where the actual time from the RTC is displayed
  */
 void submenu_0_display_time(void){
-	for(uint8_t i=0; i<6; i++){
-		set_color(i,OFF,25);	//hotfix für Papa
-	}
+//	for(uint8_t i=0; i<6; i++){
+//		set_color(i,OFF,25);	//hotfix für Papa
+//	}
 	if(data_to_RTC.new_data!=true){				//do not refresh tube with data from RTC before new data is written to RTC
 												//without this, the old time will shine for a splitsecond when writing new time
 		set_number(0, data_from_RTC.hours/10);
@@ -437,8 +478,6 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 	//menu function
 	number_value = on_time[current_state][current_substate];
 
-
-
 	//blink active digits
 	uint32_t blink_color = 0;
 	uint32_t static_color = 0;
@@ -528,9 +567,6 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 		set_number(2, number_value/10);
 		set_number(3, number_value%10);
 	}
-	//debug
-	set_number(4, current_state);
-	set_number(5, current_substate);
 }
 
 /**
