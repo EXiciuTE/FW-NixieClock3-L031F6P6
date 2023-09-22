@@ -77,7 +77,7 @@ void Error_Handler(void);
 //basic global variables
 extern uint8_t board_size;
 static uint32_t main_timer = 0;
-extern uint8_t on_time[8][4];	//8: time areas, 4 values per time area (start/end day, start/end time hhmm)
+extern uint8_t on_time[8][6];	//8: time areas, 6 values per time area (start/end day, start/end time hh + mm)
 
 //variables for runtime handling
 static uint32_t sys_counter=0;			//counts system time in 1ms increments

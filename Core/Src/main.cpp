@@ -51,7 +51,7 @@
 
 /* USER CODE BEGIN PV */
 uint8_t board_size=0;
-uint8_t on_time[8][4]={};
+uint8_t on_time[8][6]={0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
