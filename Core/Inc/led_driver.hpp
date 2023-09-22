@@ -20,7 +20,7 @@
 #define NUM_BITS 24
 #define HIGH_CLOCKS 25	//27 - 13: if last LED is green, second last shimmers blue too
 #define LOW_CLOCKS 15
-#define LED_RESET 50	// theoretically >280us; 1 step=1,25us --> 240/1,25 = 300us; but 50 works much better :/
+#define LED_RESET 240	// theoretically >280us; 1 step=1,25us --> 240/1,25 = 300us; but 50 works much better :/
 
 //define default colors
 #define WHITE 		0xffffff

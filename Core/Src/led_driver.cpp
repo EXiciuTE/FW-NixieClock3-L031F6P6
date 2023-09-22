@@ -26,13 +26,13 @@ void set_color(uint8_t led_number, uint32_t hex_code, uint8_t brightness){
 		brightness = 1;
 	//apply brightness to each color segment and reshuffle bits as required by the LED: green-red-blue
 	//red
-	brightness_controller = (uint16_t)((hex_code&0xff0000) >> 16)*brightness/100;
-	led_data[led_number] |= (uint16_t)brightness_controller << 8;
+	brightness_controller = (uint32_t)((hex_code&0xff0000) >> 16)*brightness/100;
+	led_data[led_number] |= (uint32_t)brightness_controller << 8;
 	//green
-	brightness_controller = (uint16_t)((hex_code&0xff00) >> 8)*brightness/100;
+	brightness_controller = (uint32_t)((hex_code&0xff00) >> 8)*brightness/100;
 	led_data[led_number] |= (uint32_t)brightness_controller << 16;
 	//blue
-	brightness_controller = (uint16_t)(hex_code&0xff)*brightness/100;
+	brightness_controller = (uint32_t)(hex_code&0xff)*brightness/100;
 	led_data[led_number] |= brightness_controller;
 }
 
