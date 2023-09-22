@@ -18,12 +18,14 @@
 //defines
 #define MAX_LED 6
 #define NUM_BITS 24
-#define HIGH_CLOCKS 26	//27 - 13: if last LED is green, second last shimmers blue too; 24-16 flicker
-#define LOW_CLOCKS 14
-// 24-16 - flicker off
+#define HIGH_CLOCKS 27	//27 - 13: if last LED is green, second last shimmers blue too; 24-16 flicker
+#define LOW_CLOCKS 13
 // 25-15 - flicker in menu
 // 26-14 - flicker in menu
+// 27-13 - flicker off - with 120 reset
+// 27-13 - flicker in menu - with 240
 #define LED_RESET 240	// theoretically >280us; 1 step=1,25us --> 240/1,25 = 300us
+
 
 //define default colors
 #define WHITE 		0xffffff

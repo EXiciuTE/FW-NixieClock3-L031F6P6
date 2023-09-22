@@ -1702,7 +1702,7 @@ void send_data(bool state){
  8000b76:	001a      	movs	r2, r3
  8000b78:	4b33      	ldr	r3, [pc, #204]	; (8000c48 <_Z9send_datab+0x114>)
  8000b7a:	0052      	lsls	r2, r2, #1
- 8000b7c:	210e      	movs	r1, #14
+ 8000b7c:	210d      	movs	r1, #13
  8000b7e:	52d1      	strh	r1, [r2, r3]
  8000b80:	e01d      	b.n	8000bbe <_Z9send_datab+0x8a>
 			}
@@ -1729,7 +1729,7 @@ void send_data(bool state){
  8000ba4:	001a      	movs	r2, r3
  8000ba6:	4b28      	ldr	r3, [pc, #160]	; (8000c48 <_Z9send_datab+0x114>)
  8000ba8:	0052      	lsls	r2, r2, #1
- 8000baa:	211a      	movs	r1, #26
+ 8000baa:	211b      	movs	r1, #27
  8000bac:	52d1      	strh	r1, [r2, r3]
  8000bae:	e006      	b.n	8000bbe <_Z9send_datab+0x8a>
 				else
@@ -1739,7 +1739,7 @@ void send_data(bool state){
  8000bb4:	001a      	movs	r2, r3
  8000bb6:	4b24      	ldr	r3, [pc, #144]	; (8000c48 <_Z9send_datab+0x114>)
  8000bb8:	0052      	lsls	r2, r2, #1
- 8000bba:	210e      	movs	r1, #14
+ 8000bba:	210d      	movs	r1, #13
  8000bbc:	52d1      	strh	r1, [r2, r3]
 			}
 			index++;
