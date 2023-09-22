@@ -423,7 +423,6 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 		blink_state = false;
 	}
 
-
 	if(local_input == 0x8){	//safe made changes and leave
 		current_menu = 9;
 		//TODO: safe settings
@@ -437,6 +436,47 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 
 	//menu function
 	number_value = on_time[current_state][current_substate];
+
+
+
+	//blink active digits
+	uint32_t blink_color = 0;
+	uint32_t static_color = 0;
+
+	if(current_substate == 0){
+		static_color = RED;
+		blink_color = GREEN;
+	}
+	if(current_substate == 1){
+		static_color = GREEN;
+		blink_color = RED;
+	}
+	else if(current_substate == 2 || current_substate == 3){
+		static_color = blink_color = GREEN;
+	}
+	else if(current_substate > 3){	// current_substate == 4 || == 5
+		static_color = blink_color = RED;
+	}
+
+	if(blink_state==!true)
+		blink_color = 0;
+
+	if(current_substate%2 == 0){	//when first two tubes display changed number
+		set_color(0,blink_color,25);
+		set_color(1,blink_color,25);
+		set_color(2,static_color,25);
+		set_color(3,static_color,25);
+	}else{
+		set_color(0,static_color,25);
+		set_color(1,static_color,25);
+		set_color(2,blink_color,25);
+		set_color(3,blink_color,25);
+	}
+
+	if(timeout(blink_timer)==true){	//500ms loop
+		blink_timer = start_timer_ms(500);
+		blink_state = !blink_state;
+	}
 
 	//change data according to input
 	switch(local_input){
