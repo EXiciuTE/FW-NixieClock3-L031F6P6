@@ -90,7 +90,7 @@ void run_output_mixer(uint8_t input){
 	if(current_menu == 9){
 		new_selected_menu = submenu_9_menu_select(input);
 		input=0;
-		set_number(0, selected_menu);
+
 	}
 
 //	if(current_menu == 4){		//LED brightness control
@@ -131,8 +131,15 @@ void run_output_mixer(uint8_t input){
 //		set_number(board_size-1, brightness % 10);
 //	}
 
-	//############################ run Output Handler ############################
+	//############################ write data to flash ############################
+	if(flash_write == true){
+		bool temp = write_flash_new_data();
+		if(temp == 0)
+			flash_write = false;
+	}
 
+
+	//############################ run Output Handler  ############################
 
 	static bool hv_on = false;
 	static bool area_entered = false;	// variable only changes if area is entered/left - does occur once per area
@@ -184,7 +191,7 @@ void run_output_mixer(uint8_t input){
 		hv_on = set_flyback_state(flyback_status);
 	}
 	if(hv_on != true)
-		set_color(0, CYAN , 10);
+		set_color(1, CYAN , 10);
 
 	set_point(1, true);	//DEBUG
 	// Tube Output-Data
@@ -445,6 +452,7 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 	static uint32_t blink_timer = 0;
 	static uint8_t current_state = 0;
 	static uint8_t current_substate = 0;
+	static uint8_t otc[8][6] = {0};	//on time copy
 
 	//current state: 0 - 8; each state contains 6 substates: start day, end day, start time hours/minutes, endtime hours/minutes
 
@@ -452,6 +460,11 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 		current_state = 0;
 		current_substate = 0;
 		blink_state = false;
+		for(uint8_t i=0;i<8;i++){		//copy on_time to temporary register
+			for(uint8_t j = 0; j<6; j++){
+				otc[i][j] = on_time[i][j];
+			}
+		}
 	}
 
 	//handle menu control
@@ -460,6 +473,11 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 		if(current_substate==6){
 			current_state++;
 			current_substate = 0;
+			for(uint8_t i=0;i<8;i++){		//copy temporary data back to on_time with every time profile changed
+				for(uint8_t j = 0; j<6; j++){
+					on_time[i][j] = otc[i][j];
+				}
+			}
 		}
 		local_input=0;
 		blink_state = false;
@@ -467,17 +485,17 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 
 	if(local_input == 0x8){	//safe made changes and leave
 		current_menu = 9;
-		//TODO: safe settings
+		flash_write = true;
 	}
 
 	if(current_state == 8){
 		current_state = 7;	//set state back to legal value to prevent writing in illegal memory space
 		current_menu = 9;
-		//TODO: safe settings
+		flash_write = true;
 	}
 
 	//menu function
-	number_value = on_time[current_state][current_substate];
+	number_value = otc[current_state][current_substate];
 
 	//blink active digits
 	uint32_t blink_color = 0;
@@ -544,27 +562,27 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 			number_value = 0;
 	}
 
-	on_time[current_state][current_substate] = number_value;
+	otc[current_state][current_substate] = number_value;
 
 	//display output
 	if(current_substate == 0){
 		set_number(1, number_value);
-		set_number(3, on_time[current_state][1]);
+		set_number(3, otc[current_state][1]);
 	}
 	if(current_substate == 1){
-		set_number(1, on_time[current_state][0]);
+		set_number(1, otc[current_state][0]);
 		set_number(3, number_value);
 	}
 	if(current_substate == 2 || current_substate == 4){
 		set_number(0, number_value/10);
 		set_number(1, number_value%10);
-		set_number(2, on_time[current_state][current_substate+1]/10);
-		set_number(3, on_time[current_state][current_substate+1]%10);
+		set_number(2, otc[current_state][current_substate+1]/10);
+		set_number(3, otc[current_state][current_substate+1]%10);
 
 	}
 	if(current_substate == 3 || current_substate == 5){
-		set_number(0, on_time[current_state][current_substate-1]/10);
-		set_number(1, on_time[current_state][current_substate-1]%10);
+		set_number(0, otc[current_state][current_substate-1]/10);
+		set_number(1, otc[current_state][current_substate-1]%10);
 		set_number(2, number_value/10);
 		set_number(3, number_value%10);
 	}
@@ -583,6 +601,7 @@ bool submenu_9_menu_select(uint8_t local_input){
 		selected_menu = 6;
 	if(selected_menu == 7)
 		selected_menu = 0;
+	set_number(0, selected_menu);
 	if(local_input == 0x4){
 		current_menu = selected_menu;
 		return true;
@@ -591,4 +610,29 @@ bool submenu_9_menu_select(uint8_t local_input){
 	}
 	else
 		return false;
+}
+
+/**
+ * @brief function to write new settings to flash, when input is complete
+ * @return returns 0 if write was successful, else return 1
+ */
+bool write_flash_new_data(void){
+	uint8_t temp = 1;
+	uint8_t data = 0;
+	uint32_t addr = UP_FLASH_ADDR;
+
+	temp = HAL_FLASHEx_DATAEEPROM_Unlock();
+
+	if(temp == 0){
+		for(uint8_t i=0; i<50; i++){	//50 bytes to write in flash (8*6 time area; 2 led+points)
+			if(i<48)
+				data = on_time[i/6][i%6];
+			else
+				data = misc_setting[i-48];
+			temp = HAL_FLASHEx_DATAEEPROM_Program(FLASH_TYPEPROGRAMDATA_BYTE, addr, data);
+			addr++;
+		}
+	}
+	HAL_FLASHEx_DATAEEPROM_Lock();
+	return temp;
 }

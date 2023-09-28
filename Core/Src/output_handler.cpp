@@ -42,7 +42,7 @@ void set_number(uint8_t tube_number, uint8_t value){
 		value=0xf;
 
 	if(tube_number%2 == 1)
-		value = value << 4;
+		value = (value << 4) & 0xff;
 
 	//spi_data [0] = seconds; [2] = minutes; [3] = hours
 

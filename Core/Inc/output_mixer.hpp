@@ -29,6 +29,7 @@ void submenu_4_set_led_color(uint8_t);
 void submenu_5_set_led_effect(uint8_t);
 void submenu_6_set_points(uint8_t);
 bool submenu_9_menu_select(uint8_t);
+bool write_flash_new_data(void);
 
 static uint32_t output_mixer_led_timer = 0;
 static uint32_t output_mixer_tube_timer = 0;
@@ -38,7 +39,7 @@ static uint8_t current_menu = 0;
 static uint8_t selected_menu = 0;	//used for menu navigator
 static bool new_selected_menu = false;
 static uint8_t old_state = 0;
-//static bool	data_to_safe = false;
+static bool	flash_write = false;
 
 // misc variables
 static uint32_t active_color=GREEN;

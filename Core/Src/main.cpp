@@ -51,7 +51,8 @@
 
 /* USER CODE BEGIN PV */
 uint8_t board_size=0;
-uint8_t on_time[8][6]={0};
+uint8_t on_time[8][6] = {0};
+uint8_t misc_setting[2] = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -108,6 +109,30 @@ int main(void)
   if(HAL_GPIO_ReadPin(sens_size_GPIO_Port, sens_size_Pin)==true){
 	  board_size = 6;
   }
+
+  // read flash - load time zones, LED an point config
+  uint32_t *RDAddr = (uint32_t *) UP_FLASH_ADDR;
+  uint8_t rx8[WORDS_IN_FLASH*4];
+
+  for(uint8_t i=0; i<WORDS_IN_FLASH; i++){
+	  uint32_t rx32 = *(__IO uint32_t *)RDAddr;
+	  RDAddr++;
+	  rx8[i*4+0]=(uint8_t)(rx32&0xff);
+	  rx8[i*4+1]=(uint8_t)(rx32 >> 8) &0xff;
+	  rx8[i*4+2]=(uint8_t)(rx32 >> 16)&0xff;
+	  rx8[i*4+3]=(uint8_t)(rx32 >> 24);
+  }
+
+  uint8_t index = 0;
+  for(uint8_t i=0;i<8;i++){
+	  for(uint8_t j=0;j<6;j++){
+		  on_time[i][j] = rx8[index];
+		  index++;
+	  }
+  }
+  misc_setting[index-48] = rx8[index]; index++;
+  misc_setting[index-48] = rx8[index];
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
