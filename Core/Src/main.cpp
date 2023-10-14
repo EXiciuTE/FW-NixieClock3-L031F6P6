@@ -52,7 +52,7 @@
 /* USER CODE BEGIN PV */
 uint8_t board_size=0;
 uint8_t on_time[8][6] = {0};
-uint8_t misc_setting[2] = {0};
+uint8_t misc_setting[3] = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,7 +110,7 @@ int main(void)
 	  board_size = 6;
   }
 
-  // read flash - load time zones, LED an point config
+  // read flash - load time zones, LED, brightness, point config
   uint32_t *RDAddr = (uint32_t *) UP_FLASH_ADDR;
   uint8_t rx8[WORDS_IN_FLASH*4];
 
@@ -130,8 +130,9 @@ int main(void)
 		  index++;
 	  }
   }
-  misc_setting[index-48] = rx8[index]; index++;
-  misc_setting[index-48] = rx8[index];
+  misc_setting[index-48] = rx8[index]; index++;	//load LED config
+  misc_setting[index-48] = rx8[index]; index++;	//load brightness config
+  misc_setting[index-48] = rx8[index];	//load point config
 
   /* USER CODE END 2 */
 

@@ -73,7 +73,7 @@ void Error_Handler(void);
 
 #define MAIN_TIMER 1
 #define UP_FLASH_ADDR 0x08080000
-#define WORDS_IN_FLASH	13	//8*6+2 / 4
+#define WORDS_IN_FLASH	13	//8*6+3 / 4
 
 
 /* USER CODE BEGIN Private defines */
@@ -81,7 +81,7 @@ void Error_Handler(void);
 extern uint8_t board_size;
 static uint32_t main_timer = 0;
 extern uint8_t on_time[8][6];	//8: time areas, 6 values per time area (start/end day, start/end time hh + mm)
-extern uint8_t misc_setting[2];	//point setting and led setting
+extern uint8_t misc_setting[3];	//led setting + brightness + point setting - for LED color definition see led_driver.hpp
 
 //variables for runtime handling
 static uint32_t sys_counter=0;			//counts system time in 1ms increments
