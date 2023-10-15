@@ -8,21 +8,21 @@
 
 #include <output_mixer.hpp>
 
-uint32_t colors_hex[14] = {0x000000,
-		0xffffff,
-		0xff0000,
-		0xffa500,
-		0xffff00,
-		0x7fff00,
-		0x00ff00,
-		0x00ff7f,
-		0x00ffff,
-		0x007fff,
-		0x0000ff,
-		0xee82ee,
-		0xff00ff,
-		0xff007f
-};
+//uint32_t colors_hex[14] = {0x000000,
+//		0xffffff,
+//		0xff0000,
+//		0xffa500,
+//		0xffff00,
+//		0x7fff00,
+//		0x00ff00,
+//		0x00ff7f,
+//		0x00ffff,
+//		0x007fff,
+//		0x0000ff,
+//		0xee82ee,
+//		0xff00ff,
+//		0xff007f
+//};
 
 /**
  * @brief Processes all data and generates commands for Output Handler and LED driver
@@ -214,7 +214,6 @@ void run_output_mixer(uint8_t input){
 	if(hv_on != true)
 		set_color(1, CYAN , 10);
 
-	set_point(1, true);	//DEBUG
 	// Tube Output-Data
 	if(timeout(output_mixer_tube_timer)){
 		output_mixer_tube_timer = start_timer_ms(TUBE_REFRESH_RATE_MS);
@@ -618,8 +617,8 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 	static uint8_t current_state = 0;
 	static uint8_t changing_value = 0;
-	static uint8_t selected_color = 0 ;
-	static uint8_t selected_brightness = 0 ;
+//	static uint8_t selected_color = 0 ;
+//	static uint8_t selected_brightness = 0 ;
 
 	//since we only have two active states, we can use this messy implementation of value shiftery
 	//we start in current state 1, where led data is loaded in changing value
@@ -630,14 +629,15 @@ void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 	// load temporary values and reset state on new entry
 	if(new_entry){
 		current_state = 1;						//0 - 3
-		changing_value = misc_setting[0];		//now holds LED data: 0 - 13
+//		changing_value = misc_setting[0];		//now holds LED data: 0 - 13
+		changing_value = 1;	//debug
 	}
 
 	//go to next step in setting
 	if(local_input==0x4){
 		if(current_state == 1){
 			misc_setting[0] = changing_value;
-			changing_value = misc_setting[1];	//now holds brightness data: 10 - 100
+			changing_value = misc_setting[1]/10;	//now holds brightness data: 0 - 10 - is multiplied later
 		}
 		current_state++;
 		local_input=0;
@@ -645,8 +645,8 @@ void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 
 	//leave setting and safe changes - go back to menu selection
 	if(current_state == 3){
-		misc_setting[1] = changing_value;
-		flash_write == true;
+		misc_setting[1] = changing_value*10;
+		flash_write = true;
 		current_menu = 9;
 	}
 
@@ -655,25 +655,41 @@ void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 	if(local_input == 0x2)
 		changing_value--;
 
-	//convert number of color to actual hex value for color
-
-	uint32_t displayed_color = 0;
-
-	//Display color and brightness as well as setting number
-	for(uint8_t i=0; 0<board_size; i++)	{		//board size 4 or 6
-		if(current_state == 1)
-			set_color(i, displayed_color, misc_setting[1]);
-		if(current_state == 2)
-			set_color(i, displayed_color, changing_value);
+	if(current_state == 1){
+		if(changing_value == 14)
+			changing_value = 0;
+		if(changing_value == 255)
+			changing_value = 13;
+	}
+	else{
+		if(changing_value == 11)
+			changing_value = 0;
+		if(changing_value == 255)
+			changing_value = 10;
 	}
 
-	set_number(0, changing_value/100);
-	set_number(1, changing_value%100);
-	set_number(2, changing_value%10);
+	//convert number of color to actual hex value for color
 
-	//if state 1, value 0 - 13 -> first tube is masked out
-	if(current_state == 1)
-			set_number(0, 0xA);
+//	uint32_t displayed_color = CYAN;
+
+	//Display color and brightness as well as setting number
+	for(uint8_t i=0; i<3; i++){
+		if(current_state == 1)
+//			set_color(i, CYAN, misc_setting[1]);
+			set_color(i, CYAN, 10);
+		if(current_state == 2)
+			set_color(i, CYAN, changing_value*10);
+	}
+	if(current_state == 1){
+		set_number(0, 0xA);
+		set_number(1, changing_value/10);
+		set_number(2, changing_value%10);
+	}
+	else{
+		set_number(0, changing_value/10);
+		set_number(1, changing_value%10);
+		set_number(2, 0);
+	}
 }
 
 /**
