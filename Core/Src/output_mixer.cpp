@@ -71,7 +71,6 @@ void run_output_mixer(uint8_t input){
 	//leave menu - without saving for menu 1 & 2
 	if((input == 0x8) && (current_menu!=0) && (current_menu!=3)){
 		current_menu = 0;
-//		current_state = 0;
 		old_state = 0;
 		input = 0;
 	}
@@ -114,51 +113,12 @@ void run_output_mixer(uint8_t input){
 
 	}
 
-//	if(current_menu == 4){		//LED brightness control
-//		if(current_state==4){
-//			current_menu++;
-//			current_state=0;
-//		}
-//		switch(current_state){
-//			case 0: active_color = GREEN; break;
-//			case 1: active_color = RED; break;
-//			case 2: active_color = MAGENTA; break;
-//			case 3: active_color = ORANGE; break;
-//			default: break;
-//		}
-//
-//		switch(input){
-//			case 0x1:	brightness+=10;	break;
-//			case 0x2:	brightness-=10;	break;
-//			default: break;
-//		}
-//		if(brightness==246 || brightness>110)
-//			brightness = 100;
-//		if(brightness==110)
-//			brightness = 0;
-//
-//		for(uint8_t i=0; i<6; i++){
-//			if(brightness == 0)
-//				set_color(i,OFF,brightness);
-//			else
-//				set_color(i,active_color,brightness);
-//		}
-//
-//		set_number(0, 0xA);
-//		set_number(1, 0xA);
-//		set_number(2, 0xA);
-//		set_number(board_size-3, brightness/100);
-//		set_number(board_size-2, (brightness/10)%10);
-//		set_number(board_size-1, brightness % 10);
-//	}
-
 	//############################ write data to flash ############################
 	if(flash_write == true){
 		bool temp = write_flash_new_data();
 		if(temp == 0)
 			flash_write = false;
 	}
-
 
 	//############################ run Output Handler  ############################
 
@@ -201,10 +161,10 @@ void run_output_mixer(uint8_t input){
 			hv_on = set_flyback_state(flyback_status);
 		}
 	}
-	if(inside_area == true)
-		set_color(5, GREEN,10);
-	else
-		set_color(5, RED,10);
+//	if(inside_area == true)	//DEBUG
+//		set_color(5, GREEN,10);
+//	else
+//		set_color(5, RED,10);
 
 	// switch HV-enable pin by long press of button - change led to indicate state (RED = OFF, dark = ON)
 	if(input==0x8){		//Long Press
@@ -617,8 +577,6 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 	static uint8_t current_state = 0;
 	static uint8_t changing_value = 0;
-//	static uint8_t selected_color = 0 ;
-//	static uint8_t selected_brightness = 0 ;
 
 	//since we only have two active states, we can use this messy implementation of value shiftery
 	//we start in current state 1, where led data is loaded in changing value
@@ -629,8 +587,7 @@ void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 	// load temporary values and reset state on new entry
 	if(new_entry){
 		current_state = 1;						//0 - 3
-//		changing_value = misc_setting[0];		//now holds LED data: 0 - 13
-		changing_value = 1;	//debug
+		changing_value = misc_setting[0];		//now holds LED data: 0 - 13
 	}
 
 	//go to next step in setting
@@ -670,15 +627,14 @@ void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 
 	//convert number of color to actual hex value for color
 
-//	uint32_t displayed_color = CYAN;
+	uint32_t displayed_color = CYAN;
 
 	//Display color and brightness as well as setting number
 	for(uint8_t i=0; i<3; i++){
 		if(current_state == 1)
-//			set_color(i, CYAN, misc_setting[1]);
-			set_color(i, CYAN, 10);
+			set_color(i, displayed_color, misc_setting[1]);
 		if(current_state == 2)
-			set_color(i, CYAN, changing_value*10);
+			set_color(i, displayed_color, changing_value*10);
 	}
 	if(current_state == 1){
 		set_number(0, 0xA);
@@ -705,12 +661,10 @@ bool submenu_9_menu_select(uint8_t local_input){
 		selected_menu = 6;
 	if(selected_menu == 7)
 		selected_menu = 0;
-	set_number(0, selected_menu);
+	set_number(0, selected_menu);	//multiple digits dont remove flickering
 	if(local_input == 0x4){
 		current_menu = selected_menu;
 		return true;
-		//TODO: move current state to separate subfunctions
-		//		current_state=0;	//reset state when entering new menu
 	}
 	else
 		return false;
@@ -728,7 +682,7 @@ bool write_flash_new_data(void){
 	temp = HAL_FLASHEx_DATAEEPROM_Unlock();
 
 	if(temp == 0){
-		for(uint8_t i=0; i<51; i++){	//50 bytes to write in flash (8*6 time area; 3 led+brightness+points)
+		for(uint8_t i=0; i<51; i++){	//51 bytes to write in flash (8*6 time area; 3 led+brightness+points)
 			if(i<48)
 				data = on_time[i/6][i%6];
 			else
