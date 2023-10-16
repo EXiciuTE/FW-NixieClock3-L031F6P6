@@ -28,24 +28,25 @@
 
 
 //define default colors
-//#define WHITE 		0xffffff	//color 1
-#define RED 		0xff0000	//color 2
-//#define ORANGE 		0xffa500	//color 3
-//#define YELLOW 		0xffff00	//color 4
-//#define CHARTREUSE	0x7fff00	//color 5
-#define GREEN 		0x00ff00	//color 6
-//#define TURQUOISE 	0x00ff7f	//color 7
-#define CYAN 		0x00ffff	//color 8
-//#define AZURE 		0x007fff	//color 9
-//#define BLUE 		0x0000ff	//color 10
-//#define VIOLET 		0xee82ee	//color 11
-//#define MAGENTA 	0xff00ff	//color 12
-//#define ROSE 		0xff007f	//color 13
-#define OFF			0x000000	//color 0
-
-typedef enum {white, red, orange, yellow, chartreuse, green, turquoise, cyan, azure, blue, violet, magenta, rose} Colors;
+//#define WHITE 		0xffffff
+//#define RED 			0xff0000
+//#define ORANGE 		0xffa500
+//#define YELLOW 		0xffff00
+//#define CHARTREUSE	0x7fff00
+//#define GREEN 		0x00ff00
+//#define TURQUOISE 	0x00ff7f
+//#define CYAN 			0x00ffff
+//#define AZURE 		0x007fff
+//#define BLUE 			0x0000ff
+//#define VIOLET 		0xee82ee
+//#define MAGENTA 		0xff00ff
+//#define ROSE 			0xff007f
+//#define OFF			0x000000
 
 extern uint32_t colors_hex[14];
+
+typedef enum {led_off, white, red, orange, yellow, chartreuse, green, turquoise, cyan, azure, blue, violet, magenta, rose} Colors;
+
 
 void set_color(uint8_t, uint32_t, uint8_t);
 void send_data(bool);

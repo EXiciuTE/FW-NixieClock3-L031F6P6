@@ -8,21 +8,22 @@
 
 #include <output_mixer.hpp>
 
-//uint32_t colors_hex[14] = {0x000000,
-//		0xffffff,
-//		0xff0000,
-//		0xffa500,
-//		0xffff00,
-//		0x7fff00,
-//		0x00ff00,
-//		0x00ff7f,
-//		0x00ffff,
-//		0x007fff,
-//		0x0000ff,
-//		0xee82ee,
-//		0xff00ff,
-//		0xff007f
-//};
+uint32_t colors_hex[14] = {
+		0x000000,		//off
+		0xffffff,		//white
+		0xff0000,		//red
+		0xffa500,		//orange
+		0xffff00,		//yellow
+		0x7fff00,		//chartreuse
+		0x00ff00,		//green
+		0x00ff7f,		//turquoise
+		0x00ffff,		//cyan
+		0x007fff,		//azure
+		0x0000ff,		//blue
+		0xee82ee,		//violet
+		0xff00ff,		//magenta
+		0xff007f		//rose
+};
 
 /**
  * @brief Processes all data and generates commands for Output Handler and LED driver
@@ -53,7 +54,7 @@ void run_output_mixer(uint8_t input){
 	for(uint8_t i = 0; i<6; i++){
 		set_point(i, false);
 		set_number(i, 0xA);
-		set_color(i, OFF, 25);
+		set_color(i, colors_hex[led_off], 25);
 	}
 
 	//manage menu - button pressen?
@@ -161,10 +162,6 @@ void run_output_mixer(uint8_t input){
 			hv_on = set_flyback_state(flyback_status);
 		}
 	}
-//	if(inside_area == true)	//DEBUG
-//		set_color(5, GREEN,10);
-//	else
-//		set_color(5, RED,10);
 
 	// switch HV-enable pin by long press of button - change led to indicate state (RED = OFF, dark = ON)
 	if(input==0x8){		//Long Press
@@ -172,7 +169,14 @@ void run_output_mixer(uint8_t input){
 		hv_on = set_flyback_state(flyback_status);
 	}
 	if(hv_on != true)
-		set_color(1, CYAN , 10);
+		set_color(1, colors_hex[cyan] , 10);
+
+	//apply LED output setting when Tubes are on and clock in time display mode
+	if(current_menu == 0 && hv_on == true){
+		for(uint8_t i=0; i<board_size; i++){
+			set_color(i, colors_hex[misc_setting[0]],misc_setting[1]);
+		}
+	}
 
 	// Tube Output-Data
 	if(timeout(output_mixer_tube_timer)){
@@ -253,12 +257,12 @@ void submenu_1_set_time(uint8_t local_input, bool new_entry){
 
 	//blink active digits
 	if(blink_state==true){
-		set_color((current_state*2)-1,OFF,25);
-		set_color((current_state*2)-2,OFF,25);
+		set_color((current_state*2)-1,colors_hex[led_off],25);
+		set_color((current_state*2)-2,colors_hex[led_off],25);
 	}
 	else{
-		set_color((current_state*2)-1,GREEN,25);
-		set_color((current_state*2)-2,GREEN,25);
+		set_color((current_state*2)-1,colors_hex[green],25);
+		set_color((current_state*2)-2,colors_hex[green],25);
 	}
 	if(timeout(blink_timer)==true){	//500ms loop
 		blink_timer = start_timer_ms(500);
@@ -346,7 +350,7 @@ void submenu_2_set_date(uint8_t local_input, bool new_entry){
 	//blink active digits
 	uint16_t blink_color = 0;
 	if(blink_state==true)
-		blink_color = GREEN;
+		blink_color = colors_hex[green];
 	else
 		blink_color = 0;
 
@@ -482,18 +486,18 @@ void submenu_3_set_onoff(uint8_t local_input, bool new_entry){
 	uint32_t static_color = 0;
 
 	if(current_substate == 0){
-		static_color = RED;
-		blink_color = GREEN;
+		static_color = colors_hex[red];
+		blink_color = colors_hex[green];
 	}
 	if(current_substate == 1){
-		static_color = GREEN;
-		blink_color = RED;
+		static_color = colors_hex[green];
+		blink_color = colors_hex[red];
 	}
 	else if(current_substate == 2 || current_substate == 3){
-		static_color = blink_color = GREEN;
+		static_color = blink_color = colors_hex[green];
 	}
 	else if(current_substate > 3){	// current_substate == 4 || == 5
-		static_color = blink_color = RED;
+		static_color = blink_color = colors_hex[red];
 	}
 
 	if(blink_state==!true)
@@ -625,16 +629,12 @@ void submenu_4_set_led_color(uint8_t local_input, bool new_entry){
 			changing_value = 10;
 	}
 
-	//convert number of color to actual hex value for color
-
-	uint32_t displayed_color = CYAN;
-
 	//Display color and brightness as well as setting number
 	for(uint8_t i=0; i<3; i++){
 		if(current_state == 1)
-			set_color(i, displayed_color, misc_setting[1]);
+			set_color(i, colors_hex[changing_value], misc_setting[1]);
 		if(current_state == 2)
-			set_color(i, displayed_color, changing_value*10);
+			set_color(i, colors_hex[misc_setting[0]], changing_value*10);
 	}
 	if(current_state == 1){
 		set_number(0, 0xA);
@@ -658,8 +658,8 @@ bool submenu_9_menu_select(uint8_t local_input){
 	if(local_input == 0x2)
 		selected_menu--;
 	if(selected_menu == 255)
-		selected_menu = 6;
-	if(selected_menu == 7)
+		selected_menu = 4;
+	if(selected_menu == 5)
 		selected_menu = 0;
 	set_number(0, selected_menu);	//multiple digits dont remove flickering
 	if(local_input == 0x4){

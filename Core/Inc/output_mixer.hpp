@@ -42,7 +42,6 @@ static uint8_t old_state = 0;
 static bool	flash_write = false;
 
 // misc variables
-static uint32_t active_color=GREEN;
 static bool flyback_status=false;
 
 //debug
