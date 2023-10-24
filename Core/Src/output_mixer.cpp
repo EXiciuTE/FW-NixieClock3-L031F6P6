@@ -124,6 +124,7 @@ void run_output_mixer(uint8_t input){
 	//############################ run Output Handler  ############################
 
 	static bool hv_on = false;
+	static bool hv_on_old = false;
 	static bool area_entered = false;	// variable only changes if area is entered/left - does occur once per area
 	static bool area_left = false;
 	bool inside_area = false;
@@ -143,6 +144,7 @@ void run_output_mixer(uint8_t input){
 							area_entered = true;
 							area_left = false;
 							flyback_status = true;
+							hv_on_old = hv_on;
 							hv_on = set_flyback_state(flyback_status);
 						}
 						inside_area = true;
@@ -166,6 +168,7 @@ void run_output_mixer(uint8_t input){
 	// switch HV-enable pin by long press of button - change led to indicate state (RED = OFF, dark = ON)
 	if(input==0x8){		//Long Press
 		flyback_status = !flyback_status;
+		hv_on_old = hv_on;
 		hv_on = set_flyback_state(flyback_status);
 	}
 	if(hv_on != true)
@@ -195,25 +198,34 @@ void run_output_mixer(uint8_t input){
  * @brief: default "menu" where the actual time from the RTC is displayed
  */
 void submenu_0_display_time(void){
-//	for(uint8_t i=0; i<6; i++){
-//		set_color(i,OFF,25);	//hotfix für Papa
-//	}
-	if(data_to_RTC.new_data!=true){				//do not refresh tube with data from RTC before new data is written to RTC
-												//without this, the old time will shine for a splitsecond when writing new time
-		set_number(0, data_from_RTC.hours/10);
-		set_number(1, data_from_RTC.hours%10);
-		set_number(2, data_from_RTC.minutes/10);
-		set_number(3, data_from_RTC.minutes%10);
-		set_number(4, data_from_RTC.seconds/10);
-		set_number(5, data_from_RTC.seconds%10);
-		if((data_from_RTC.seconds %2) ==true){
-			set_point(1, false);
-			set_point(3, true);
+	if(data_to_RTC.new_data == true)			//do not refresh tube with data from RTC before new data is written to RTC
+		return;									//without this, the old time will shine for a splitsecond when writing new time
+
+	//start animation
+	//shifting every 10 minutes
+	//random every 60 minutes
+	if(data_from_RTC.seconds == 0 && data_from_RTC.minutes%10 == 0){
+		if(data_from_RTC.minutes == 0){
+			animation_random();
 		}
 		else{
-			set_point(1, true);
-			set_point(3, false);
+			animation_shifting();
 		}
+	}
+
+	set_number(0, data_from_RTC.hours/10);
+	set_number(1, data_from_RTC.hours%10);
+	set_number(2, data_from_RTC.minutes/10);
+	set_number(3, data_from_RTC.minutes%10);
+	set_number(4, data_from_RTC.seconds/10);
+	set_number(5, data_from_RTC.seconds%10);
+	if((data_from_RTC.seconds %2) ==true){
+		set_point(1, false);
+		set_point(3, true);
+	}
+	else{
+		set_point(1, true);
+		set_point(3, false);
 	}
 }
 
@@ -693,4 +705,40 @@ bool write_flash_new_data(void){
 	}
 	HAL_FLASHEx_DATAEEPROM_Lock();
 	return temp;
+}
+
+/**
+ * @brief: animation that shifts the numbers like a slot machine for a few seconds
+ * @info: gets called every full hour and on startup
+ */
+void animation_random(void){
+	uint32_t animation_timer = 0;
+	for(uint8_t i=0; i<board_size; i++){	//4 or 6 random stages
+		for(uint8_t j=0; j<20; j++){		//x cycles per stage
+			for(uint8_t k=board_size-1; k>i; k--){	//4 or 6 digits
+				set_number(k, start_timer_ms(0)%10);		//start_timer_ms returns system runtime in ms
+			}
+			animation_timer = start_timer_ms(ANIM_SLOT_RATE_MS);
+			set_output();
+			while(timeout(animation_timer) != true)
+				;
+		}
+	}
+}
+
+/**
+ *@brief: animation that shifts the numbers from 0 to 9 to address cathode poisoning
+ *@info: gets called every ten minutes
+ */
+void animation_shifting(void){
+	uint32_t animation_timer = 0;
+	for(uint8_t i=0; i<10; i++){
+		animation_timer = start_timer_ms(ANIM_SHIFT_RATE_MS);
+		for(uint8_t j=0; j<board_size; j++){
+			set_number(j, i);
+		}
+		set_output();
+		while(timeout(animation_timer) != true)
+			;
+	}
 }

@@ -15,9 +15,13 @@
 
 #define LED_REFRESH_RATE	30	//Hz
 #define TUBE_REFRESH_RATE	30	//Hz
+#define ANIM_SHIFT_RATE		10	//Hz
+#define ANIM_SLOT_RATE		20	//Hz
 
 #define LED_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
 #define TUBE_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
+#define ANIM_SHIFT_RATE_MS		1000/ANIM_SHIFT_RATE
+#define ANIM_SLOT_RATE_MS		1000/ANIM_SLOT_RATE
 
 void run_output_mixer(uint8_t);	//processes data and call output
 
@@ -30,6 +34,8 @@ void submenu_5_set_points(uint8_t);
 void submeun_6_random_animation(void);
 bool submenu_9_menu_select(uint8_t);
 bool write_flash_new_data(void);
+void animation_random(void);
+void animation_shifting(void);
 
 static uint32_t output_mixer_led_timer = 0;
 static uint32_t output_mixer_tube_timer = 0;
@@ -42,7 +48,7 @@ static uint8_t old_state = 0;
 static bool	flash_write = false;
 
 // misc variables
-static bool flyback_status=false;
+static bool flyback_status = false;
 
 //debug
 static uint8_t brightness = 0;
