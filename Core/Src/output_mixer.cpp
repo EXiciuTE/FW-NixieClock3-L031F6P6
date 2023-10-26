@@ -176,6 +176,9 @@ void run_output_mixer(uint8_t input){
 
 	if(hv_on == true && hv_on_old==false){
 		hv_on_old = hv_on;
+		for(uint8_t i = 0; i<6; i++){
+			set_number(i, 0xa);
+		}
 		animation_random();
 	}
 
@@ -730,21 +733,25 @@ bool write_flash_new_data(void){
 void animation_random(void){
 	uint32_t stage_timer = 0;
 	uint32_t random_timer = 0;
-	uint8_t rng = 0;
-	for(uint8_t i=0; i<board_size; i++){				//4 or 6 random stages
-		stage_timer = start_timer_ms(500-i*10);			// stay in one stage for 500ms
-		while(timeout(stage_timer) != true){
-			for(uint8_t j=board_size-(i+1);j<board_size;j++){
-				for(uint8_t k=0;k<4;k++){
-					rng += (uint8_t) (random_timer/(9*k)%10);
-				}
-				random_timer = start_timer_ms(10);		//refreshes numbers every 10 ms
-				set_number(j, rng%10);
-				set_output();
+	uint8_t rng = 42;			// because 42 is always the answer. Or is it Miata?
+	static uint32_t seed = start_timer_ms(rng);		//use timer as seed
 
+	for(uint8_t i=0; i<board_size; i++){						//4 or 6 random stages
+		stage_timer = start_timer_ms(500);						// stay in one stage for 500ms
+		while(timeout(stage_timer) != true){
+
+			for(uint8_t j=board_size-(i+1);j<board_size;j++){	//increase random numbers per stage - start with seconds
+
+				seed = (uint32_t)(seed * 1103515245 + 79841)&0x7fffffff;
+				rng = seed % 27;
+
+				set_number(j, rng%10);
+				random_timer = start_timer_ms(30/(i+1));		//refreshes numbers every 10 ms
 				while(timeout(random_timer) != true)
 					;
 			}
+			set_output();
+
 		}
 	}
 }
