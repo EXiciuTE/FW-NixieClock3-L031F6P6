@@ -174,6 +174,11 @@ void run_output_mixer(uint8_t input){
 	if(hv_on != true)
 		set_color(1, colors_hex[cyan] , 10);
 
+	if(hv_on == true && hv_on_old==false){
+		hv_on_old = hv_on;
+		animation_random();
+	}
+
 	//apply LED output setting when Tubes are on and clock in time display mode
 	if(current_menu == 0 && hv_on == true){
 		for(uint8_t i=0; i<board_size; i++){
@@ -201,18 +206,6 @@ void submenu_0_display_time(void){
 	if(data_to_RTC.new_data == true)			//do not refresh tube with data from RTC before new data is written to RTC
 		return;									//without this, the old time will shine for a splitsecond when writing new time
 
-	//start animation
-	//shifting every 10 minutes
-	//random every 60 minutes
-	if(data_from_RTC.seconds == 0 && data_from_RTC.minutes%10 == 0){
-		if(data_from_RTC.minutes == 0){
-			animation_random();
-		}
-		else{
-			animation_shifting();
-		}
-	}
-
 	set_number(0, data_from_RTC.hours/10);
 	set_number(1, data_from_RTC.hours%10);
 	set_number(2, data_from_RTC.minutes/10);
@@ -226,6 +219,18 @@ void submenu_0_display_time(void){
 	else{
 		set_point(1, true);
 		set_point(3, false);
+	}
+
+	//start animation after setting numbers, so that the digits are not blank
+	//shifting every 10 minutes
+	//random every 60 minutes
+	if(data_from_RTC.seconds == 0 && data_from_RTC.minutes%10 == 0){
+		if(data_from_RTC.minutes == 0){
+			animation_random();
+		}
+		else{
+			animation_shifting();
+		}
 	}
 }
 
@@ -669,13 +674,24 @@ bool submenu_9_menu_select(uint8_t local_input){
 		selected_menu++;
 	if(local_input == 0x2)
 		selected_menu--;
+
 	if(selected_menu == 255)
-		selected_menu = 4;
-	if(selected_menu == 5)
+		selected_menu = 6;
+	if(selected_menu == 7)
 		selected_menu = 0;
-	set_number(0, selected_menu);	//multiple digits dont remove flickering
+	set_number(0, selected_menu);	//multiple digits don't remove flickering
 	if(local_input == 0x4){
 		current_menu = selected_menu;
+		//debug!!!
+		if(selected_menu == 5){		//shift menu
+			current_menu = 0;
+			animation_shifting();
+
+		}
+		if(selected_menu == 6){		//random menu
+			current_menu = 0;
+			animation_random();
+		}
 		return true;
 	}
 	else
@@ -712,16 +728,23 @@ bool write_flash_new_data(void){
  * @info: gets called every full hour and on startup
  */
 void animation_random(void){
-	uint32_t animation_timer = 0;
-	for(uint8_t i=0; i<board_size; i++){	//4 or 6 random stages
-		for(uint8_t j=0; j<20; j++){		//x cycles per stage
-			for(uint8_t k=board_size-1; k>i; k--){	//4 or 6 digits
-				set_number(k, start_timer_ms(0)%10);		//start_timer_ms returns system runtime in ms
+	uint32_t stage_timer = 0;
+	uint32_t random_timer = 0;
+	uint8_t rng = 0;
+	for(uint8_t i=0; i<board_size; i++){				//4 or 6 random stages
+		stage_timer = start_timer_ms(500-i*10);			// stay in one stage for 500ms
+		while(timeout(stage_timer) != true){
+			for(uint8_t j=board_size-(i+1);j<board_size;j++){
+				for(uint8_t k=0;k<4;k++){
+					rng += (uint8_t) (random_timer/(9*k)%10);
+				}
+				random_timer = start_timer_ms(10);		//refreshes numbers every 10 ms
+				set_number(j, rng%10);
+				set_output();
+
+				while(timeout(random_timer) != true)
+					;
 			}
-			animation_timer = start_timer_ms(ANIM_SLOT_RATE_MS);
-			set_output();
-			while(timeout(animation_timer) != true)
-				;
 		}
 	}
 }
@@ -733,7 +756,7 @@ void animation_random(void){
 void animation_shifting(void){
 	uint32_t animation_timer = 0;
 	for(uint8_t i=0; i<10; i++){
-		animation_timer = start_timer_ms(ANIM_SHIFT_RATE_MS);
+		animation_timer = start_timer_ms(250);	//100ms per display
 		for(uint8_t j=0; j<board_size; j++){
 			set_number(j, i);
 		}

@@ -15,13 +15,10 @@
 
 #define LED_REFRESH_RATE	30	//Hz
 #define TUBE_REFRESH_RATE	30	//Hz
-#define ANIM_SHIFT_RATE		10	//Hz
-#define ANIM_SLOT_RATE		20	//Hz
 
 #define LED_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
 #define TUBE_REFRESH_RATE_MS	1000/LED_REFRESH_RATE
-#define ANIM_SHIFT_RATE_MS		1000/ANIM_SHIFT_RATE
-#define ANIM_SLOT_RATE_MS		1000/ANIM_SLOT_RATE
+
 
 void run_output_mixer(uint8_t);	//processes data and call output
 
