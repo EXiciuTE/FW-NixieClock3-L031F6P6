@@ -51,10 +51,10 @@ void run_output_mixer(uint8_t input){
 	 */
 
 	//reset all outputs
-	for(uint8_t i = 0; i<6; i++){
+	for(uint8_t i = 0; i<board_size; i++){
 		set_point(i, false);
 		set_number(i, 0xA);
-		set_color(i, colors_hex[led_off], 25);
+		set_color(i, colors_hex[led_off], 10);
 	}
 
 	//manage menu - button pressen?
@@ -169,16 +169,15 @@ void run_output_mixer(uint8_t input){
 	if(input==0x8){		//Long Press
 		flyback_status = !flyback_status;
 		hv_on_old = hv_on;
-		hv_on = set_flyback_state(flyback_status);
-	}
-	if(hv_on != true)
-		set_color(1, colors_hex[cyan] , 10);
-
-	if(hv_on == true && hv_on_old==false){
-		hv_on_old = hv_on;
 		for(uint8_t i = 0; i<6; i++){
 			set_number(i, 0xa);
 		}
+		set_output();
+		hv_on = set_flyback_state(flyback_status);
+	}
+
+	if(hv_on == true && hv_on_old==false){
+		hv_on_old = hv_on;
 		animation_random();
 	}
 
@@ -186,6 +185,12 @@ void run_output_mixer(uint8_t input){
 	if(current_menu == 0 && hv_on == true){
 		for(uint8_t i=0; i<board_size; i++){
 			set_color(i, colors_hex[misc_setting[0]],misc_setting[1]);
+		}
+	}
+	//apply dark LED output setting when Tubes are off
+	if(current_menu == 0 && hv_on == false){
+		for(uint8_t i=0; i<board_size; i++){
+			set_color(i, colors_hex[misc_setting[0]],1);
 		}
 	}
 
@@ -677,24 +682,13 @@ bool submenu_9_menu_select(uint8_t local_input){
 		selected_menu++;
 	if(local_input == 0x2)
 		selected_menu--;
-
 	if(selected_menu == 255)
-		selected_menu = 6;
-	if(selected_menu == 7)
+		selected_menu = 4;
+	if(selected_menu == 5)
 		selected_menu = 0;
-	set_number(0, selected_menu);	//multiple digits don't remove flickering
+	set_number(0, selected_menu);
 	if(local_input == 0x4){
 		current_menu = selected_menu;
-		//debug!!!
-		if(selected_menu == 5){		//shift menu
-			current_menu = 0;
-			animation_shifting();
-
-		}
-		if(selected_menu == 6){		//random menu
-			current_menu = 0;
-			animation_random();
-		}
 		return true;
 	}
 	else
