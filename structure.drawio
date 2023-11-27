@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-21T18:40:25.493Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.203" etag="T30cIs3WdX-BJ3RkUw9h" version="21.6.6" type="device">
+<mxfile host="app.diagrams.net" modified="2023-11-27T21:46:44.663Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="bq9ai3PWRBqK5iZyBiY7" version="22.1.4" type="device">
   <diagram name="Seite-1" id="6L9HFDCO-Z73CPM4C7mu">
-    <mxGraphModel dx="2074" dy="1124" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+    <mxGraphModel dx="984" dy="533" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -165,6 +165,130 @@
         </mxCell>
         <mxCell id="GGv3wluL2XYjww3TU3gE-5" value="output_mixer_run() - process data; call output&lt;br&gt;&lt;br&gt;gets all needed data from input and setting" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="280" y="420" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-3" target="_tSQbvhMfmVYTzBnhMRj-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-6" value="5 Sekunden drücken oder&lt;br&gt;aktiver Zeitbereich betreten" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_tSQbvhMfmVYTzBnhMRj-5">
+          <mxGeometry x="-0.2792" y="1" relative="1" as="geometry">
+            <mxPoint x="89" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-3" value="Aus" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1760" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="_tSQbvhMfmVYTzBnhMRj-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="320" y="1960" as="sourcePoint" />
+            <mxPoint x="260" y="1840" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="280" y="1960" />
+              <mxPoint x="280" y="1800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-8" value="5 Sekunden drücken oder&lt;br&gt;aktiven Zeitbereich verlassen" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_tSQbvhMfmVYTzBnhMRj-7">
+          <mxGeometry x="0.0847" relative="1" as="geometry">
+            <mxPoint x="-80" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-12" value="kurz drücken&lt;br&gt;(= wählen/bestätigen)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-4" target="_tSQbvhMfmVYTzBnhMRj-10">
+          <mxGeometry y="60" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-4" value="Normaler Modus" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1920" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-18" value="&quot;0&quot; auswählen" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-10" target="_tSQbvhMfmVYTzBnhMRj-4">
+          <mxGeometry x="-0.75" y="10" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="2092" />
+              <mxPoint x="520" y="1960" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-35" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-10" target="_tSQbvhMfmVYTzBnhMRj-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-36" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-10" target="_tSQbvhMfmVYTzBnhMRj-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-39" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-10" target="_tSQbvhMfmVYTzBnhMRj-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-10" target="_tSQbvhMfmVYTzBnhMRj-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-10" value="Menü&lt;br&gt;drehen zum ändern&lt;br&gt;drücken zum Bestätigen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="2080" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-23" value="Stunde + Minute bestätigen&lt;br&gt;oder&lt;br&gt;lange drücken (Änderungen&lt;br&gt;verwerfen und abbrechen)" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;rounded=1;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-14" target="_tSQbvhMfmVYTzBnhMRj-10">
+          <mxGeometry x="-1" y="79" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="2060" />
+              <mxPoint x="338" y="2060" />
+            </Array>
+            <mxPoint x="-52" y="19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-14" value="&quot;1&quot;&lt;br&gt;Uhrzeit einstellen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="2040" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-37" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-15" target="_tSQbvhMfmVYTzBnhMRj-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="2300" />
+              <mxPoint x="290" y="2300" />
+              <mxPoint x="290" y="2140" />
+              <mxPoint x="320" y="2140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-38" value="Tag wählen (1 = Montag),&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Datum + Monat wählen,&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Jahr wählen + bestätigen&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;oder&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;lange drücken (Änderungen&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;verwerfen und abbrechen)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_tSQbvhMfmVYTzBnhMRj-37">
+          <mxGeometry x="-0.505" relative="1" as="geometry">
+            <mxPoint x="-124" y="40" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-15" value="&quot;2&quot;&lt;br&gt;Datum einstellen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="2200" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-40" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-16" target="_tSQbvhMfmVYTzBnhMRj-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="2300" />
+              <mxPoint x="470" y="2300" />
+              <mxPoint x="470" y="2140" />
+              <mxPoint x="440" y="2140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-41" value="Farbe wählen:&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;00 = aus,&amp;nbsp;bestätigen&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Helligkeit wählen, bestätigen&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Ist eine Farbe aktiv (nicht 00),&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;wird diese bei inaktivem Zeitbereich&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;(Ziffern aus) in minimaler Helligkeit&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;dargestellt um den Zustand der Uhr&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;zu symbolisieren" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_tSQbvhMfmVYTzBnhMRj-40">
+          <mxGeometry x="-0.5634" y="2" relative="1" as="geometry">
+            <mxPoint x="136" y="58" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-16" value="&quot;4&quot;&lt;br&gt;Beleuchtung einstellen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="2200" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-26" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="_tSQbvhMfmVYTzBnhMRj-17" target="_tSQbvhMfmVYTzBnhMRj-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="2300" />
+              <mxPoint x="450" y="2300" />
+              <mxPoint x="450" y="2190" />
+              <mxPoint x="422" y="2190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-28" value="Starttag (grün) + Endtag (rot) wählen&lt;br&gt;für den der Bereich gelten soll:&lt;br&gt;&lt;span style=&quot;background-color: rgb(0, 255, 0);&quot;&gt;1&lt;/span&gt; &lt;span style=&quot;background-color: rgb(255, 0, 0);&quot;&gt;5&lt;/span&gt;&amp;nbsp;--&amp;gt; Montag bis Freitag, bestätigen&lt;br&gt;Startzeit wählen, bestätigen&lt;br&gt;Endzeit wählen, bestätigen&lt;br&gt;Nächster Zeitbereich...&lt;br&gt;&lt;br&gt;Während eines Tages kann es mehrere&lt;br&gt;Zeitbereiche geben. Diese können sich&lt;br&gt;überlappen.&lt;br&gt;&lt;br&gt;Bsp:&lt;br&gt;Bereich 1: Montag - Freitag: 05:00 - 08:00&lt;br&gt;Bereich 2: Montag bis Donnerstag: 16:00 - 22:00&lt;br&gt;Bereich 3: Samstag - Sonntag: 07:00 - 12:00&lt;br&gt;Bereich 4: Freitag - Sonntag 14:00 - 23:59&lt;br&gt;&lt;br&gt;Für ungenutzte Bereich Startzeit = Endzeit einstellen&lt;br&gt;&lt;br&gt;Lange drücken speichert alle fertig konfigurierten&lt;br&gt;Bereiche und verlässt das Untermenü" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="_tSQbvhMfmVYTzBnhMRj-26">
+          <mxGeometry x="-0.6385" y="-2" relative="1" as="geometry">
+            <mxPoint x="-29" y="158" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_tSQbvhMfmVYTzBnhMRj-17" value="&quot;3&quot;&lt;br&gt;Ein-/ Auszeiten&lt;br&gt;Einstellen" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="2200" width="120" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
